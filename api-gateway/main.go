@@ -22,12 +22,20 @@ func main() {
 	)
 	// 用户服务调用实例
 	userService := services.NewUserService("rpcUserService",userMicroService.Client())
+
+	// task
+	taskMicroService := micro.NewService(
+		micro.Name("taskService.client"),
+		micro.WrapClient(wrappers.NewTaskWrapper),
+		)
+	taskService := services.NewTaskService("rpcTaskService",taskMicroService.Client())
+
 	//创建微服务实例，使用gin暴露http接口并注册到etcd
 	server := web.NewService(
 		web.Name("httpService"),
 		web.Address(":4000"),
 		//将服务调用实例使用gin处理
-		web.Handler(weblib.NewRouter(userService)),
+		web.Handler(weblib.NewRouter(userService,taskService)),
 		web.Registry(etcdReg),
 		web.RegisterTTL(time.Second*30),
 		web.RegisterInterval(time.Second*15),
