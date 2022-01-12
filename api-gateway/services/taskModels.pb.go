@@ -4,7 +4,7 @@
 // 	protoc        v3.15.5
 // source: taskModels.proto
 
-package service
+package services
 
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"

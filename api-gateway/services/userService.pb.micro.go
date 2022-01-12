@@ -33,13 +33,13 @@ var _ context.Context
 var _ client.Option
 var _ server.Option
 
-// Api Endpoints for UserService service
+// Api Endpoints for UserService services
 
 func NewUserServiceEndpoints() []*api.Endpoint {
 	return []*api.Endpoint{}
 }
 
-// Client API for UserService service
+// Client API for UserService services
 
 type UserService interface {
 	UserLogin(ctx context.Context, in *UserRequest, opts ...client.CallOption) (*UserDetailResponse, error)
@@ -78,7 +78,7 @@ func (c *userService) UserRegister(ctx context.Context, in *UserRequest, opts ..
 	return out, nil
 }
 
-// Server API for UserService service
+// Server API for UserService services
 
 type UserServiceHandler interface {
 	UserLogin(context.Context, *UserRequest, *UserDetailResponse) error

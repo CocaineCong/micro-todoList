@@ -3,8 +3,8 @@ package conf
 import (
 	"fmt"
 	"gopkg.in/ini.v1"
-	"mq-server/model"
 	"strings"
+	"task/model"
 )
 
 var (
