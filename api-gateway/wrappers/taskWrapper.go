@@ -25,7 +25,7 @@ func NewTask(id uint64, name string) *services.TaskModel {
 func DefaultTasks(resp interface{}) {
 	models := make([]*services.TaskModel, 0)
 	var i uint64
-	for i := 0; i < 10; i++ {
+	for i = 0; i < 10; i++ {
 		models = append(models, NewTask(i, "降级备忘录"+strconv.Itoa(20+int(i))))
 	}
 	result := resp.(*services.TaskListResponse)
