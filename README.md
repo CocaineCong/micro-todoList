@@ -114,8 +114,8 @@ RabbitMQPort = 5672
 ```
 
 # 运行简要说明
-1. 保证rabbitMQ开启
-2. 保证etcd开启
+1. 保证rabbitMQ开启状态
+2. 保证etcd开启状态
 3. 依次执行各模块下的main.go文件
 4. 执行user,task,api-gateway的时候需要后面加上这个，注册到etcd并且注册地址是这个地址。
 ```go

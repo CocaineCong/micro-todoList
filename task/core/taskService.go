@@ -76,6 +76,9 @@ func (*TaskService) UpdateTask(ctx context.Context,req *services.TaskRequest,res
 
 // 删除备忘录
 func (*TaskService) DeleteTask(ctx context.Context,req *services.TaskRequest,resp *services.TaskDetailResponse) error {
-	model.DB.Model(&model.Task{}).Where("id =? AND uid=?", req.Id, req.Uid).Delete(&model.Task{})
+	err := model.DB.Model(&model.Task{}).Where("id =? AND uid=?", req.Id, req.Uid).Delete(&model.Task{}).Error
+	if err != nil {
+		return errors.New("删除失败："+err.Error())
+	}
 	return nil
 }

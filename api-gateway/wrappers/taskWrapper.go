@@ -48,9 +48,7 @@ func (wrapper *TaskWrapper) Call(ctx context.Context, req client.Request, rsp in
 	return hystrix.Do(cmdName, func() error {
 		return wrapper.Client.Call(ctx, req, rsp)
 	}, func(err error) error {
-		//降级处理
-		//DefaultProducts(rsp)
-		//DefaultData(rsp)
+		DefaultTasks(rsp)
 		return err
 	})
 }

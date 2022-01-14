@@ -26,12 +26,7 @@ func GetTaskList(ginCtx *gin.Context) {
 		},
 	})
 }
-/*
-CreateTask
-GetTaskDetail
-UpdateTask
-DeleteTask
-*/
+
 func CreateTask(ginCtx *gin.Context) {
 	var taskReq services.TaskRequest
 	PanicIfTaskError(ginCtx.Bind(&taskReq))
