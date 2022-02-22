@@ -42,10 +42,10 @@
 
 # 项目结构
 
-## 1. api-gateway 网关部分
+## 1. gateway 网关部分
 
 ```
-api-gateway/
+gateway/
 ├── pkg
 │  ├── e
 │  ├── logging
