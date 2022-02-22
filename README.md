@@ -15,6 +15,10 @@
 
 **[备忘录模块](https://blog.csdn.net/weixin_45304503/article/details/122301707)**
 
+# 项目的视频介绍地址
+
+[Go-Micro+RabbitMQ 构建简单备忘录](https://www.bilibili.com/video/BV1h44y1L7LN)
+
 # 项目的主要功能介绍
 
 - 用户注册登录 ( jwt-go鉴权 )
