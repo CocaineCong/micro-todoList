@@ -1,0 +1,308 @@
+{
+	"info": {
+		"_postman_id": "022d738d-a2e9-440f-b730-591232cad276",
+		"name": "micro-demo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10242828"
+	},
+	"item": [
+		{
+			"name": "用户模块",
+			"item": [
+				{
+					"name": "用户注册",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "UserName",
+									"value": "FanOne2",
+									"type": "default"
+								},
+								{
+									"key": "Password",
+									"value": "12345678",
+									"type": "default"
+								},
+								{
+									"key": "PasswordConfirm",
+									"value": "12345678",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:4000/api/v1/user/register",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "用户登录",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "UserName",
+									"value": "FanOne2",
+									"type": "default"
+								},
+								{
+									"key": "Password",
+									"value": "12345678",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}api/v1/user/login",
+							"host": [
+								"{{url}}api"
+							],
+							"path": [
+								"v1",
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "备忘录操作",
+			"item": [
+				{
+					"name": "创建备忘录",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "Title",
+									"value": "FanOne",
+									"type": "default"
+								},
+								{
+									"key": "Content",
+									"value": "点赞！",
+									"type": "default"
+								},
+								{
+									"key": "Status",
+									"value": "0",
+									"type": "default"
+								},
+								{
+									"key": "start",
+									"value": "",
+									"type": "default",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}api/v1/task",
+							"host": [
+								"{{url}}api"
+							],
+							"path": [
+								"v1",
+								"task"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "测试token连接",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{url}}api/v1/ping",
+							"host": [
+								"{{url}}api"
+							],
+							"path": [
+								"v1",
+								"ping"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "获取备忘录",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{url}}api/v1/tasks",
+							"host": [
+								"{{url}}api"
+							],
+							"path": [
+								"v1",
+								"tasks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "更新备忘录",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "Title",
+									"value": "11111",
+									"type": "default"
+								},
+								{
+									"key": "Content",
+									"value": "收藏",
+									"type": "default"
+								},
+								{
+									"key": "Status",
+									"value": "1",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}api/v1/task/1",
+							"host": [
+								"{{url}}api"
+							],
+							"path": [
+								"v1",
+								"task",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "获取备忘录详情",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{url}}api/v1/task/1",
+							"host": [
+								"{{url}}api"
+							],
+							"path": [
+								"v1",
+								"task",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "删除备忘录",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{url}}api/v1/task/1",
+							"host": [
+								"{{url}}api"
+							],
+							"path": [
+								"v1",
+								"task",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "测试连接",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:4000/api/v1/ping",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"v1",
+						"ping"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

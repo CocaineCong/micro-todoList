@@ -20,6 +20,7 @@ func main() {
 		micro.Name("userService.client"),
 		micro.WrapClient(wrappers.NewUserWrapper),
 	)
+
 	// 用户服务调用实例
 	userService := services.NewUserService("rpcUserService",userMicroService.Client())
 

@@ -49,12 +49,12 @@ gateway/
 ├── pkg
 │  ├── e
 │  ├── logging
-│  ├── util
+│  └── util
 ├── services
-│  ├── proto
+│  └── proto
 ├── weblib
 │  ├── handlers
-│  ├── middleware
+│  └──  middleware
 └── wrappers
 ```
 - pkg/e : 封装错误码
@@ -115,6 +115,8 @@ RabbitMQHost = localhost
 RabbitMQPort = 5672
 ```
 
+
+
 # 运行简要说明
 1. 保证rabbitMQ开启状态
 2. 保证etcd开启状态
@@ -125,6 +127,22 @@ go run main.go --registry=etcd --registry_address=127.0.0.1:2379
 ```
 
 **如果出错一定要注意打开etcd的keeper查看服务是否注册到etcd中。**
+
+# 导入接口文档
+
+打开postman，点击导入
+
+![postman导入](doc/1.点击import导入.png)
+
+选择导入文件
+![选择导入接口文件](doc/2.选择文件.png)
+
+![导入](doc/3.导入.png)
+
+效果
+
+![postman](doc/4.效果.png)
+
 
 
 # 最后
