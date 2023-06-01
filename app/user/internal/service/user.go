@@ -13,16 +13,6 @@ import (
 	"github.com/CocaineCong/micro-todoList/pkg/e"
 )
 
-func BuildUser(item *model.User) *idl.UserModel {
-	userModel := idl.UserModel{
-		ID:        uint32(item.ID),
-		UserName:  item.UserName,
-		CreatedAt: item.CreatedAt.Unix(),
-		UpdatedAt: item.UpdatedAt.Unix(),
-	}
-	return &userModel
-}
-
 var UserSrvIns *UserSrv
 var UserSrvOnce sync.Once
 
@@ -48,7 +38,7 @@ func (u *UserSrv) UserLogin(ctx context.Context, req *idl.UserRequest, resp *idl
 
 	if !user.CheckPassword(req.Password) {
 		resp.Code = e.InvalidParams
-		return nil
+		return
 	}
 
 	resp.UserDetail = BuildUser(user)
@@ -87,4 +77,14 @@ func (u *UserSrv) UserRegister(ctx context.Context, req *idl.UserRequest, resp *
 
 	resp.UserDetail = BuildUser(user)
 	return
+}
+
+func BuildUser(item *model.User) *idl.UserModel {
+	userModel := idl.UserModel{
+		ID:        uint32(item.ID),
+		UserName:  item.UserName,
+		CreatedAt: item.CreatedAt.Unix(),
+		UpdatedAt: item.UpdatedAt.Unix(),
+	}
+	return &userModel
 }

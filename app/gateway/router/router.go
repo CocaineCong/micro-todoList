@@ -9,7 +9,7 @@ import (
 	"github.com/CocaineCong/micro-todoList/app/gateway/middleware"
 )
 
-func NewRouter(service ...interface{}) *gin.Engine {
+func NewRouter() *gin.Engine {
 	ginRouter := gin.Default()
 	ginRouter.Use(middleware.Cors())
 	store := cookie.NewStore([]byte("something-very-secret"))
