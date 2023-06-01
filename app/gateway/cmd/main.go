@@ -8,7 +8,7 @@ import (
 	"github.com/micro/go-micro/v2/registry/etcd"
 	"github.com/micro/go-micro/v2/web"
 
-	"github.com/CocaineCong/micro-todoList/app/gateway/http"
+	"github.com/CocaineCong/micro-todoList/app/gateway/router"
 	"github.com/CocaineCong/micro-todoList/app/gateway/wrappers"
 	"github.com/CocaineCong/micro-todoList/idl"
 )
@@ -38,7 +38,7 @@ func main() {
 		web.Name("httpService"),
 		web.Address("127.0.0.1:4000"),
 		// 将服务调用实例使用gin处理
-		web.Handler(http.NewRouter(userService, taskService)),
+		web.Handler(router.NewRouter(userService, taskService)),
 		web.Registry(etcdReg),
 		web.RegisterTTL(time.Second*30),
 		web.RegisterInterval(time.Second*15),

@@ -13,6 +13,7 @@ var (
 	DbUser     string
 	DbPassWord string
 	DbName     string
+	Charset    string
 
 	RabbitMQ         string
 	RabbitMQUser     string
@@ -27,6 +28,7 @@ func Init() {
 		fmt.Println("配置文件读取错误，请检查文件路径:", err)
 	}
 	LoadMysqlData(file)
+	LoadRabbitMQ(file)
 }
 
 func LoadMysqlData(file *ini.File) {
@@ -36,4 +38,13 @@ func LoadMysqlData(file *ini.File) {
 	DbUser = file.Section("mysql").Key("DbUser").String()
 	DbPassWord = file.Section("mysql").Key("DbPassWord").String()
 	DbName = file.Section("mysql").Key("DbName").String()
+	Charset = file.Section("mysql").Key("Charset").String()
+}
+
+func LoadRabbitMQ(file *ini.File) {
+	RabbitMQ = file.Section("rabbitmq").Key("RabbitMQ").String()
+	RabbitMQUser = file.Section("rabbitmq").Key("RabbitMQUser").String()
+	RabbitMQPassWord = file.Section("rabbitmq").Key("RabbitMQPassWord").String()
+	RabbitMQHost = file.Section("rabbitmq").Key("RabbitMQHost").String()
+	RabbitMQPort = file.Section("rabbitmq").Key("RabbitMQPort").String()
 }

@@ -1,11 +1,10 @@
-package handlers
+package http
 
 import (
-	"api-gateway/pkg/utils"
-	"api-gateway/services"
 	"context"
-	"github.com/gin-gonic/gin"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 // 用户注册
