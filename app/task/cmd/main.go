@@ -5,7 +5,7 @@ import (
 	"github.com/micro/go-micro/v2/registry"
 	"github.com/micro/go-micro/v2/registry/etcd"
 
-	"github.com/CocaineCong/micro-todoList/app/task/core"
+	"github.com/CocaineCong/micro-todoList/app/task/internal/service"
 	"github.com/CocaineCong/micro-todoList/config"
 	"github.com/CocaineCong/micro-todoList/idl"
 )
@@ -26,7 +26,7 @@ func main() {
 	// 结构命令行参数，初始化
 	microService.Init()
 	// 服务注册
-	_ = idl.RegisterTaskServiceHandler(microService.Server(), new(core.TaskService))
+	_ = idl.RegisterTaskServiceHandler(microService.Server(), new(service.TaskService))
 	// 启动微服务
 	_ = microService.Run()
 }
