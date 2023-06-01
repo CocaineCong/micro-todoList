@@ -11,6 +11,7 @@ import (
 	"github.com/CocaineCong/micro-todoList/app/task/internal/repository/db/dao"
 	"github.com/CocaineCong/micro-todoList/idl"
 	"github.com/CocaineCong/micro-todoList/mq-server/model"
+	log "github.com/CocaineCong/micro-todoList/pkg/logger"
 )
 
 var TaskSrvIns *TaskSrv
@@ -54,7 +55,8 @@ func (t *TaskSrv) GetTasksList(ctx context.Context, req *idl.TaskRequest, resp *
 	// 查找备忘录
 	r, count, err := dao.NewTaskDao(ctx).ListTaskByUserId(req.Uid, int(req.Start), int(req.Limit))
 	if err != nil {
-		return err
+		log.LogrusObj.Error("ListTaskByUserId err:%v", err)
+		return
 	}
 	// 返回proto里面定义的类型
 	var taskRes []*idl.TaskModel
@@ -71,33 +73,34 @@ func (t *TaskSrv) GetTask(ctx context.Context, req *idl.TaskRequest, resp *idl.T
 	resp = new(idl.TaskDetailResponse)
 	r, err := dao.NewTaskDao(ctx).GetTaskByTaskIdAndUserId(req.Id, req.Uid)
 	if err != nil {
+		log.LogrusObj.Error("GetTask err:%v", err)
 		return
 	}
 	taskRes := BuildTask(r)
 	resp.TaskDetail = taskRes
-	return nil
+	return
 }
 
 // UpdateTask 修改备忘录
-func (t *TaskSrv) UpdateTask(ctx context.Context, req *idl.TaskRequest, resp *idl.TaskDetailResponse) error {
-	taskData := model.Task{}
+func (t *TaskSrv) UpdateTask(ctx context.Context, req *idl.TaskRequest, resp *idl.TaskDetailResponse) (err error) {
 	// 查找该用户的这条信息
-	model.DB.Model(&model.Task{}).Where("id= ? AND uid=?", req.Id, req.Uid).First(&taskData)
-	taskData.Title = req.Title
-	taskData.Status = int(req.Status)
-	taskData.Content = req.Content
-	model.DB.Save(&taskData)
+	taskData, err := dao.NewTaskDao(ctx).UpdateTask(req)
+	if err != nil {
+		log.LogrusObj.Error("UpdateTask err:%v", err)
+		return
+	}
 	resp.TaskDetail = BuildTask(taskData)
-	return nil
+	return
 }
 
 // DeleteTask 删除备忘录
-func (t *TaskSrv) DeleteTask(ctx context.Context, req *idl.TaskRequest, resp *idl.TaskDetailResponse) error {
-	err := model.DB.Model(&model.Task{}).Where("id =? AND uid=?", req.Id, req.Uid).Delete(&model.Task{}).Error
+func (t *TaskSrv) DeleteTask(ctx context.Context, req *idl.TaskRequest, resp *idl.TaskDetailResponse) (err error) {
+	err = dao.NewTaskDao(ctx).DeleteTaskByIdAndUserId(req.Id, req.Uid)
 	if err != nil {
-		return errors.New("删除失败：" + err.Error())
+		log.LogrusObj.Error("DeleteTask err:%v", err)
+		return
 	}
-	return nil
+	return
 }
 
 func BuildTask(item *model.Task) *idl.TaskModel {
