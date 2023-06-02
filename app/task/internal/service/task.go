@@ -8,10 +8,10 @@ import (
 
 	"github.com/streadway/amqp"
 
-	"github.com/CocaineCong/micro-todoList/app/task/internal/repository/db/dao"
 	"github.com/CocaineCong/micro-todoList/idl"
 	"github.com/CocaineCong/micro-todoList/mq-server/model"
 	log "github.com/CocaineCong/micro-todoList/pkg/logger"
+	"github.com/CocaineCong/micro-todoList/repository/db/dao"
 )
 
 var TaskSrvIns *TaskSrv

@@ -18,9 +18,7 @@ func GetTaskList(ctx *gin.Context) {
 	}
 	// 调用服务端的函数
 	taskResp, err := taskService.GetTasksList(context.Background(), &taskReq)
-	if err != nil {
-		PanicIfTaskError(err)
-	}
+
 	ctx.JSON(200, gin.H{
 		"data": gin.H{
 			"task":  taskResp.TaskList,

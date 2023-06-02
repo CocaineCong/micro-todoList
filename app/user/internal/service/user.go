@@ -7,10 +7,10 @@ import (
 
 	"github.com/jinzhu/gorm"
 
-	"github.com/CocaineCong/micro-todoList/app/user/internal/repository/db/dao"
-	"github.com/CocaineCong/micro-todoList/app/user/internal/repository/db/model"
 	"github.com/CocaineCong/micro-todoList/idl"
 	"github.com/CocaineCong/micro-todoList/pkg/e"
+	"github.com/CocaineCong/micro-todoList/repository/db/dao"
+	"github.com/CocaineCong/micro-todoList/repository/db/model"
 )
 
 var UserSrvIns *UserSrv

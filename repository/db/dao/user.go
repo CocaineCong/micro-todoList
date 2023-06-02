@@ -5,7 +5,7 @@ import (
 
 	"gorm.io/gorm"
 
-	"github.com/CocaineCong/micro-todoList/app/user/internal/repository/db/model"
+	"github.com/CocaineCong/micro-todoList/repository/db/model"
 )
 
 type UserDao struct {
