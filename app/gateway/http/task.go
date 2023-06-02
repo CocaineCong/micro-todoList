@@ -4,13 +4,14 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/spf13/cast"
 
 	"github.com/CocaineCong/micro-todoList/app/gateway/rpc"
 	"github.com/CocaineCong/micro-todoList/idl"
 	"github.com/CocaineCong/micro-todoList/pkg/ctl"
 )
 
-func GetTaskList(ctx *gin.Context) {
+func ListTaskHandler(ctx *gin.Context) {
 	var taskReq idl.TaskRequest
 	if err := ctx.Bind(&taskReq); err != nil {
 		ctx.JSON(http.StatusBadRequest, ctl.RespError(ctx, err, "绑定参数失败"))
@@ -25,7 +26,7 @@ func GetTaskList(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, ctl.RespSuccess(ctx, taskResp))
 }
 
-func CreateTask(ctx *gin.Context) {
+func CreateTaskHandler(ctx *gin.Context) {
 	var req idl.TaskRequest
 	if err := ctx.Bind(&req); err != nil {
 		ctx.JSON(http.StatusBadRequest, ctl.RespError(ctx, err, "绑定参数失败"))
@@ -45,7 +46,7 @@ func CreateTask(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, ctl.RespSuccess(ctx, taskRes))
 }
 
-func GetTaskDetail(ctx *gin.Context) {
+func GetTaskHandler(ctx *gin.Context) {
 	var req idl.TaskRequest
 	if err := ctx.Bind(&req); err != nil {
 		ctx.JSON(http.StatusBadRequest, ctl.RespError(ctx, err, "绑定参数失败"))
@@ -56,6 +57,7 @@ func GetTaskDetail(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, ctl.RespError(ctx, err, "获取用户信息错误"))
 		return
 	}
+	req.Id = cast.ToUint64(ctx.Param("id"))
 	req.Uid = uint64(user.Id)
 	taskRes, err := rpc.TaskList(ctx, &req)
 	if err != nil {
@@ -65,7 +67,7 @@ func GetTaskDetail(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, ctl.RespSuccess(ctx, taskRes))
 }
 
-func UpdateTask(ctx *gin.Context) {
+func UpdateTaskHandler(ctx *gin.Context) {
 	var req idl.TaskRequest
 	if err := ctx.Bind(&req); err != nil {
 		ctx.JSON(http.StatusBadRequest, ctl.RespError(ctx, err, "绑定参数失败"))
@@ -76,6 +78,7 @@ func UpdateTask(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, ctl.RespError(ctx, err, "获取用户信息错误"))
 		return
 	}
+	req.Id = cast.ToUint64(ctx.Param("id"))
 	req.Uid = uint64(user.Id)
 	taskRes, err := rpc.TaskUpdate(ctx, &req)
 	if err != nil {
@@ -85,7 +88,7 @@ func UpdateTask(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, ctl.RespSuccess(ctx, taskRes))
 }
 
-func DeleteTask(ctx *gin.Context) {
+func DeleteTaskHandler(ctx *gin.Context) {
 	var req idl.TaskRequest
 	if err := ctx.Bind(&req); err != nil {
 		ctx.JSON(http.StatusBadRequest, ctl.RespError(ctx, err, "绑定参数失败"))
@@ -96,6 +99,7 @@ func DeleteTask(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, ctl.RespError(ctx, err, "获取用户信息错误"))
 		return
 	}
+	req.Id = cast.ToUint64(ctx.Param("id"))
 	req.Uid = uint64(user.Id)
 	taskRes, err := rpc.TaskDelete(ctx, &req)
 	if err != nil {
