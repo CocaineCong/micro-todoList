@@ -8,9 +8,13 @@ import (
 	"github.com/micro/go-micro/v2/web"
 
 	"github.com/CocaineCong/micro-todoList/app/gateway/router"
+	"github.com/CocaineCong/micro-todoList/app/gateway/rpc"
+	"github.com/CocaineCong/micro-todoList/config"
 )
 
 func main() {
+	config.Init()
+	rpc.InitRPC()
 	etcdReg := etcd.NewRegistry(
 		registry.Addrs("127.0.0.1:2379"),
 	)
