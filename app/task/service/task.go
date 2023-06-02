@@ -3,15 +3,13 @@ package service
 import (
 	"context"
 	"encoding/json"
-	"errors"
 	"sync"
 
-	"github.com/streadway/amqp"
-
 	"github.com/CocaineCong/micro-todoList/idl"
-	"github.com/CocaineCong/micro-todoList/mq-server/model"
 	log "github.com/CocaineCong/micro-todoList/pkg/logger"
 	"github.com/CocaineCong/micro-todoList/repository/db/dao"
+	"github.com/CocaineCong/micro-todoList/repository/db/model"
+	"github.com/CocaineCong/micro-todoList/repository/mq"
 )
 
 var TaskSrvIns *TaskSrv
@@ -28,22 +26,25 @@ func GetTaskSrv() *TaskSrv {
 }
 
 // CreateTask 创建备忘录，将备忘录信息生产，放到rabbitMQ消息队列中
-func (t *TaskSrv) CreateTask(ctx context.Context, req *idl.TaskRequest, resp *idl.TaskDetailResponse) error {
-	ch, err := model.MQ.Channel()
-	if err != nil {
-		err = errors.New("rabbitMQ channel err:" + err.Error())
-	}
-	q, _ := ch.QueueDeclare("task_queue", true, false, false, false, nil)
+func (t *TaskSrv) CreateTask(ctx context.Context, req *idl.TaskRequest, resp *idl.TaskDetailResponse) (err error) {
 	body, _ := json.Marshal(req) // title，content
-	err = ch.Publish("", q.Name, false, false, amqp.Publishing{
-		DeliveryMode: amqp.Persistent,
-		ContentType:  "application/json",
-		Body:         body,
-	})
+	err = mq.SendMessage2MQ(body)
 	if err != nil {
-		err = errors.New("rabbitMQ publish err:" + err.Error())
+		return
 	}
-	return nil
+	return
+}
+
+func TaskMQ2MySQL(ctx context.Context, req *idl.TaskRequest) error {
+	m := &model.Task{
+		Uid:       uint(req.Uid),
+		Title:     req.Title,
+		Status:    int(req.Status),
+		Content:   req.Content,
+		StartTime: req.StartTime,
+		EndTime:   req.EndTime,
+	}
+	return dao.NewTaskDao(ctx).CreateTask(m)
 }
 
 // GetTasksList 实现备忘录服务接口 获取备忘录列表

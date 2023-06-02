@@ -6,7 +6,7 @@ import (
 	"gorm.io/gorm"
 
 	"github.com/CocaineCong/micro-todoList/idl"
-	"github.com/CocaineCong/micro-todoList/mq-server/model"
+	"github.com/CocaineCong/micro-todoList/repository/db/model"
 )
 
 type TaskDao struct {
@@ -59,5 +59,10 @@ func (dao *TaskDao) DeleteTaskByIdAndUserId(id, uId uint64) error {
 	return dao.Model(&model.Task{}).
 		Where("id =? AND uid=?", id, uId).
 		Delete(&model.Task{}).Error
+
+}
+
+func (dao *TaskDao) CreateTask(in *model.Task) error {
+	return dao.Model(&model.Task{}).Create(&in).Error
 
 }
