@@ -1,82 +1,106 @@
 package http
 
 import (
-	"context"
 	"net/http"
-	"strconv"
 
 	"github.com/gin-gonic/gin"
 
+	"github.com/CocaineCong/micro-todoList/app/gateway/rpc"
 	"github.com/CocaineCong/micro-todoList/idl"
-	"github.com/CocaineCong/micro-todoList/pkg/utils"
+	"github.com/CocaineCong/micro-todoList/pkg/ctl"
 )
 
 func GetTaskList(ctx *gin.Context) {
 	var taskReq idl.TaskRequest
 	if err := ctx.Bind(&taskReq); err != nil {
-		ctx.JSON(http.StatusBadRequest, "")
+		ctx.JSON(http.StatusBadRequest, ctl.RespError(ctx, err, "绑定参数失败"))
+		return
 	}
 	// 调用服务端的函数
-	taskResp, err := taskService.GetTasksList(context.Background(), &taskReq)
-
-	ctx.JSON(200, gin.H{
-		"data": gin.H{
-			"task":  taskResp.TaskList,
-			"count": taskResp.Count,
-		},
-	})
+	taskResp, err := rpc.TaskList(ctx, &taskReq)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, ctl.RespError(ctx, err, "taskResp RPC 调用失败"))
+		return
+	}
+	ctx.JSON(http.StatusOK, ctl.RespSuccess(ctx, taskResp))
 }
 
 func CreateTask(ctx *gin.Context) {
-	var taskReq services.TaskRequest
-	PanicIfTaskError(ctx.Bind(&taskReq))
-	// 从gin.keys取出服务实例
-	claim, _ := utils.ParseToken(ctx.GetHeader("Authorization"))
-	taskReq.Uid = uint64(claim.Id)
-	taskService := ctx.Keys["taskService"].(services.TaskService)
-	taskRes, err := taskService.CreateTask(context.Background(), &taskReq)
-	PanicIfTaskError(err)
-	ctx.JSON(200, gin.H{"data": taskRes.TaskDetail})
+	var req idl.TaskRequest
+	if err := ctx.Bind(&req); err != nil {
+		ctx.JSON(http.StatusBadRequest, ctl.RespError(ctx, err, "绑定参数失败"))
+		return
+	}
+	user, err := ctl.GetUserInfo(ctx.Request.Context())
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, ctl.RespError(ctx, err, "获取用户信息错误"))
+		return
+	}
+	req.Uid = uint64(user.Id)
+	taskRes, err := rpc.TaskCreate(ctx, &req)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, ctl.RespError(ctx, err, "TaskList RPC 调度失败"))
+		return
+	}
+	ctx.JSON(http.StatusOK, ctl.RespSuccess(ctx, taskRes))
 }
 
 func GetTaskDetail(ctx *gin.Context) {
-	var taskReq services.TaskRequest
-	PanicIfTaskError(ctx.BindUri(&taskReq))
-	// 从gin.keys取出服务实例
-	claim, _ := utils.ParseToken(ctx.GetHeader("Authorization"))
-	taskReq.Uid = uint64(claim.Id)
-	id, _ := strconv.Atoi(ctx.Param("id")) // 获取task_id
-	taskReq.Id = uint64(id)
-	productService := ctx.Keys["taskService"].(services.TaskService)
-	productRes, err := productService.GetTask(context.Background(), &taskReq)
-	PanicIfTaskError(err)
-	ctx.JSON(200, gin.H{"data": productRes.TaskDetail})
+	var req idl.TaskRequest
+	if err := ctx.Bind(&req); err != nil {
+		ctx.JSON(http.StatusBadRequest, ctl.RespError(ctx, err, "绑定参数失败"))
+		return
+	}
+	user, err := ctl.GetUserInfo(ctx.Request.Context())
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, ctl.RespError(ctx, err, "获取用户信息错误"))
+		return
+	}
+	req.Uid = uint64(user.Id)
+	taskRes, err := rpc.TaskList(ctx, &req)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, ctl.RespError(ctx, err, "TaskList RPC 调度失败"))
+		return
+	}
+	ctx.JSON(http.StatusOK, ctl.RespSuccess(ctx, taskRes))
 }
 
 func UpdateTask(ctx *gin.Context) {
-	var taskReq services.TaskRequest
-	PanicIfTaskError(ctx.Bind(&taskReq))
-	// 从gin.keys取出服务实例
-	claim, _ := utils.ParseToken(ctx.GetHeader("Authorization"))
-	id, _ := strconv.Atoi(ctx.Param("id"))
-	taskReq.Id = uint64(id)
-	taskReq.Uid = uint64(claim.Id)
-	taskService := ctx.Keys["taskService"].(services.TaskService)
-	taskRes, err := taskService.UpdateTask(context.Background(), &taskReq)
-	PanicIfTaskError(err)
-	ctx.JSON(200, gin.H{"data": taskRes.TaskDetail})
+	var req idl.TaskRequest
+	if err := ctx.Bind(&req); err != nil {
+		ctx.JSON(http.StatusBadRequest, ctl.RespError(ctx, err, "绑定参数失败"))
+		return
+	}
+	user, err := ctl.GetUserInfo(ctx.Request.Context())
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, ctl.RespError(ctx, err, "获取用户信息错误"))
+		return
+	}
+	req.Uid = uint64(user.Id)
+	taskRes, err := rpc.TaskUpdate(ctx, &req)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, ctl.RespError(ctx, err, "TaskUpdate RPC 调度失败"))
+		return
+	}
+	ctx.JSON(http.StatusOK, ctl.RespSuccess(ctx, taskRes))
 }
 
 func DeleteTask(ctx *gin.Context) {
-	var taskReq services.TaskRequest
-	PanicIfTaskError(ctx.Bind(&taskReq))
-	// 从gin.keys取出服务实例
-	claim, _ := utils.ParseToken(ctx.GetHeader("Authorization"))
-	taskReq.Uid = uint64(claim.Id)
-	id, _ := strconv.Atoi(ctx.Param("id"))
-	taskReq.Id = uint64(id)
-	taskService := ctx.Keys["taskService"].(services.TaskService)
-	taskRes, err := taskService.DeleteTask(context.Background(), &taskReq)
-	PanicIfTaskError(err)
-	ctx.JSON(200, gin.H{"data": taskRes.TaskDetail})
+	var req idl.TaskRequest
+	if err := ctx.Bind(&req); err != nil {
+		ctx.JSON(http.StatusBadRequest, ctl.RespError(ctx, err, "绑定参数失败"))
+		return
+	}
+	user, err := ctl.GetUserInfo(ctx.Request.Context())
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, ctl.RespError(ctx, err, "获取用户信息错误"))
+		return
+	}
+	req.Uid = uint64(user.Id)
+	taskRes, err := rpc.TaskDelete(ctx, &req)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, ctl.RespError(ctx, err, "TaskDelete RPC 调度失败"))
+		return
+	}
+	ctx.JSON(http.StatusOK, ctl.RespSuccess(ctx, taskRes))
 }

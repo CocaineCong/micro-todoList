@@ -1,8 +1,10 @@
 package middleware
 
 import (
-	"api-gateway/pkg/utils"
 	"github.com/gin-gonic/gin"
+
+	"github.com/CocaineCong/micro-todoList/pkg/ctl"
+	"github.com/CocaineCong/micro-todoList/pkg/utils"
 )
 
 // JWT token验证中间件
@@ -14,22 +16,22 @@ func JWT() gin.HandlerFunc {
 		token := c.GetHeader("Authorization")
 		if token == "" {
 			code = 404
-		} else {
-			_, err := utils.ParseToken(token)
-			if err != nil {
-				code = 401
-			}
-		}
-		if code != 200 {
 			c.JSON(500, gin.H{
 				"code": code,
 				"msg":  "鉴权失败",
 			})
-
-			c.Abort()
-			return
 		}
-
+		claims, err := utils.ParseToken(token)
+		if err != nil {
+			code = 401
+			c.JSON(500, gin.H{
+				"code": code,
+				"msg":  "鉴权失败",
+			})
+			c.Abort()
+		}
+		c.Request = c.Request.WithContext(ctl.NewContext(c.Request.Context(), &ctl.UserInfo{Id: claims.Id}))
+		ctl.InitUserInfo(c.Request.Context())
 		c.Next()
 	}
 }

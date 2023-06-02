@@ -12,8 +12,8 @@ import (
 	"github.com/CocaineCong/micro-todoList/types"
 )
 
-// UserRegister 用户注册
-func UserRegister(ctx *gin.Context) {
+// UserRegisterHandler 用户注册
+func UserRegisterHandler(ctx *gin.Context) {
 	var req idl.UserRequest
 	if err := ctx.Bind(&req); err != nil {
 		ctx.JSON(http.StatusBadRequest, ctl.RespError(ctx, err, "UserRegister Bind 绑定参数失败"))
@@ -27,8 +27,8 @@ func UserRegister(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, ctl.RespSuccess(ctx, userResp))
 }
 
-// UserLogin 用户登录
-func UserLogin(ctx *gin.Context) {
+// UserLoginHandler 用户登录
+func UserLoginHandler(ctx *gin.Context) {
 	var req idl.UserRequest
 	if err := ctx.Bind(&req); err != nil {
 		ctx.JSON(http.StatusBadRequest, ctl.RespError(ctx, err, "UserLogin Bind 绑定参数失败"))

@@ -6,6 +6,7 @@ import (
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
 
+	"github.com/CocaineCong/micro-todoList/app/gateway/http"
 	"github.com/CocaineCong/micro-todoList/app/gateway/middleware"
 )
 
@@ -20,8 +21,8 @@ func NewRouter() *gin.Engine {
 			context.JSON(200, "success")
 		})
 		// 用户服务
-		v1.POST("/user/register", handlers.UserRegister)
-		v1.POST("/user/login", handlers.UserLogin)
+		v1.POST("/user/register", http.UserRegisterHandler)
+		v1.POST("/user/login", http.UserLoginHandler)
 
 		// 需要登录保护
 		authed := v1.Group("/")
