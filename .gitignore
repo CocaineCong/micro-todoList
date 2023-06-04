@@ -20,3 +20,4 @@ app/task/go.sum
 .idea
 api-gateway/runtime
 app/gateway/runtime
+logs
