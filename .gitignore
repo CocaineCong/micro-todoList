@@ -13,9 +13,11 @@
 
 # Dependency directories (remove the comment below to include it)
 # vendor/
-user/conf/config.ini
-user/go.sum
-mq-server/go.sum
-task/go.sum
+config/config.ini
+app/user/go.sum
+app/user/repository/mq-server/go.sum
+app/task/go.sum
 .idea
 api-gateway/runtime
+app/gateway/runtime
+logs
