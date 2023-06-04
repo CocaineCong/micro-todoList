@@ -5,11 +5,11 @@ import (
 	"encoding/json"
 	"sync"
 
+	"github.com/CocaineCong/micro-todoList/app/task/repository/db/dao"
+	"github.com/CocaineCong/micro-todoList/app/task/repository/db/model"
+	"github.com/CocaineCong/micro-todoList/app/task/repository/mq"
 	"github.com/CocaineCong/micro-todoList/idl"
 	log "github.com/CocaineCong/micro-todoList/pkg/logger"
-	"github.com/CocaineCong/micro-todoList/repository/db/dao"
-	"github.com/CocaineCong/micro-todoList/repository/db/model"
-	"github.com/CocaineCong/micro-todoList/repository/mq"
 )
 
 var TaskSrvIns *TaskSrv

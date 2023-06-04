@@ -5,8 +5,8 @@ import (
 
 	"gorm.io/gorm"
 
+	"github.com/CocaineCong/micro-todoList/app/task/repository/db/model"
 	"github.com/CocaineCong/micro-todoList/idl"
-	"github.com/CocaineCong/micro-todoList/repository/db/model"
 )
 
 type TaskDao struct {

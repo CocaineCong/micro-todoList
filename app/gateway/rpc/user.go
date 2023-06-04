@@ -2,20 +2,17 @@ package rpc
 
 import (
 	"context"
-	"errors"
+	"fmt"
 
 	"github.com/CocaineCong/micro-todoList/idl"
-	"github.com/CocaineCong/micro-todoList/pkg/e"
 )
 
 // UserLogin 用户登陆
 func UserLogin(ctx context.Context, req *idl.UserRequest) (resp *idl.UserDetailResponse, err error) {
 	resp, err = UserService.UserLogin(ctx, req)
+	fmt.Println("resp", resp)
+	fmt.Println("err", err)
 	if err != nil {
-		return
-	}
-	if resp.Code != e.SUCCESS {
-		err = errors.New("UserLogin 出现错误")
 		return
 	}
 
@@ -26,10 +23,6 @@ func UserLogin(ctx context.Context, req *idl.UserRequest) (resp *idl.UserDetailR
 func UserRegister(ctx context.Context, req *idl.UserRequest) (resp *idl.UserDetailResponse, err error) {
 	resp, err = UserService.UserRegister(ctx, req)
 	if err != nil {
-		return
-	}
-	if resp.Code != e.SUCCESS {
-		err = errors.New("UserRegister 出现错误")
 		return
 	}
 

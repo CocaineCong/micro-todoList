@@ -7,6 +7,7 @@ import (
 	"github.com/micro/go-micro/v2/registry"
 	"github.com/micro/go-micro/v2/registry/etcd"
 
+	"github.com/CocaineCong/micro-todoList/app/task/repository/db/dao"
 	"github.com/CocaineCong/micro-todoList/app/task/script"
 	"github.com/CocaineCong/micro-todoList/app/task/service"
 	"github.com/CocaineCong/micro-todoList/config"
@@ -15,6 +16,7 @@ import (
 
 func main() {
 	config.Init()
+	dao.InitDB()
 	// etcd注册件
 	etcdReg := etcd.NewRegistry(
 		registry.Addrs("127.0.0.1:2379"),

@@ -5,7 +5,7 @@ import (
 
 	"gorm.io/gorm"
 
-	"github.com/CocaineCong/micro-todoList/repository/db/model"
+	"github.com/CocaineCong/micro-todoList/app/user/repository/db/model"
 )
 
 type UserDao struct {
@@ -13,6 +13,9 @@ type UserDao struct {
 }
 
 func NewUserDao(ctx context.Context) *UserDao {
+	if ctx == nil {
+		ctx = context.Background()
+	}
 	return &UserDao{NewDBClient(ctx)}
 }
 

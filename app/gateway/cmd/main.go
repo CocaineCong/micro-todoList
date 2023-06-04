@@ -10,11 +10,13 @@ import (
 	"github.com/CocaineCong/micro-todoList/app/gateway/router"
 	"github.com/CocaineCong/micro-todoList/app/gateway/rpc"
 	"github.com/CocaineCong/micro-todoList/config"
+	log "github.com/CocaineCong/micro-todoList/pkg/logger"
 )
 
 func main() {
 	config.Init()
 	rpc.InitRPC()
+	log.InitLog()
 	etcdReg := etcd.NewRegistry(
 		registry.Addrs("127.0.0.1:2379"),
 	)

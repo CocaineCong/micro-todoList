@@ -7,10 +7,10 @@ import (
 
 	"github.com/jinzhu/gorm"
 
+	"github.com/CocaineCong/micro-todoList/app/user/repository/db/dao"
+	"github.com/CocaineCong/micro-todoList/app/user/repository/db/model"
 	"github.com/CocaineCong/micro-todoList/idl"
 	"github.com/CocaineCong/micro-todoList/pkg/e"
-	"github.com/CocaineCong/micro-todoList/repository/db/dao"
-	"github.com/CocaineCong/micro-todoList/repository/db/model"
 )
 
 var UserSrvIns *UserSrv
@@ -26,7 +26,7 @@ func GetUserSrv() *UserSrv {
 	return UserSrvIns
 }
 
-func (u *UserSrv) UserLogin(ctx context.Context, req *idl.UserRequest, resp *idl.UserDetailResponse) (err error) {
+func (u *UserSrv) UserLogin(ctx context.Context, req *idl.UserRequest) (resp *idl.UserDetailResponse, err error) {
 	resp = new(idl.UserDetailResponse)
 	resp.Code = e.SUCCESS
 
@@ -45,15 +45,14 @@ func (u *UserSrv) UserLogin(ctx context.Context, req *idl.UserRequest, resp *idl
 	return
 }
 
-func (u *UserSrv) UserRegister(ctx context.Context, req *idl.UserRequest, resp *idl.UserDetailResponse) (err error) {
+func (u *UserSrv) UserRegister(ctx context.Context, req *idl.UserRequest) (resp *idl.UserDetailResponse, err error) {
 	if req.Password != req.PasswordConfirm {
-		err := errors.New("两次密码输入不一致")
-		return err
+		err = errors.New("两次密码输入不一致")
+		return
 	}
 	resp = new(idl.UserDetailResponse)
 	resp.Code = e.SUCCESS
-	userDao := dao.NewUserDao(ctx)
-	_, err = userDao.FindUserByUserName(req.UserName)
+	_, err = dao.NewUserDao(ctx).FindUserByUserName(req.UserName)
 	if err != nil {
 		if err == gorm.ErrRecordNotFound { // 如果不存在就继续下去
 			// ...continue
@@ -68,11 +67,11 @@ func (u *UserSrv) UserRegister(ctx context.Context, req *idl.UserRequest, resp *
 	// 加密密码
 	if err = user.SetPassword(req.Password); err != nil {
 		resp.Code = e.ERROR
-		return err
+		return
 	}
-	if err = userDao.CreateUser(user); err != nil {
+	if err = dao.NewUserDao(ctx).CreateUser(user); err != nil {
 		resp.Code = e.ERROR
-		return err
+		return
 	}
 
 	resp.UserDetail = BuildUser(user)

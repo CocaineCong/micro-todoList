@@ -5,6 +5,7 @@ import (
 	"github.com/micro/go-micro/v2/registry"
 	"github.com/micro/go-micro/v2/registry/etcd"
 
+	"github.com/CocaineCong/micro-todoList/app/user/repository/db/dao"
 	"github.com/CocaineCong/micro-todoList/app/user/service"
 	"github.com/CocaineCong/micro-todoList/config"
 	"github.com/CocaineCong/micro-todoList/idl"
@@ -12,6 +13,7 @@ import (
 
 func main() {
 	config.Init()
+	dao.InitDB()
 	// etcd注册件
 	etcdReg := etcd.NewRegistry(
 		registry.Addrs("127.0.0.1:2379"),
@@ -25,7 +27,7 @@ func main() {
 	// 结构命令行参数，初始化
 	microService.Init()
 	// 服务注册
-	_ = idl.RegisterUserServiceHandler(microService.Server(), new(service.UserSrv))
+	_ = idl.RegisterUserServiceHandler(microService.Server(), service.GetUserSrv())
 	// 启动微服务
 	_ = microService.Run()
 }

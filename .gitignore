@@ -15,7 +15,7 @@
 # vendor/
 config/config.ini
 app/user/go.sum
-repository/mq-server/go.sum
+app/user/repository/mq-server/go.sum
 app/task/go.sum
 .idea
 api-gateway/runtime

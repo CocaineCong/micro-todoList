@@ -3,8 +3,8 @@ package script
 import (
 	"context"
 
+	"github.com/CocaineCong/micro-todoList/app/task/repository/mq/task"
 	log "github.com/CocaineCong/micro-todoList/pkg/logger"
-	"github.com/CocaineCong/micro-todoList/repository/mq/task"
 )
 
 func TaskCreateSync(ctx context.Context) {

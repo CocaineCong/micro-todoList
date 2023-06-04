@@ -1,6 +1,7 @@
 package http
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -8,6 +9,7 @@ import (
 	"github.com/CocaineCong/micro-todoList/app/gateway/rpc"
 	"github.com/CocaineCong/micro-todoList/idl"
 	"github.com/CocaineCong/micro-todoList/pkg/ctl"
+	log "github.com/CocaineCong/micro-todoList/pkg/logger"
 	"github.com/CocaineCong/micro-todoList/pkg/utils"
 	"github.com/CocaineCong/micro-todoList/types"
 )
@@ -21,6 +23,7 @@ func UserRegisterHandler(ctx *gin.Context) {
 	}
 	userResp, err := rpc.UserRegister(ctx, &req)
 	if err != nil {
+		log.LogrusObj.Errorf("UserRegister:%v", err)
 		ctx.JSON(http.StatusInternalServerError, ctl.RespError(ctx, err, "UserRegister RPC 调用失败"))
 		return
 	}
@@ -39,6 +42,7 @@ func UserLoginHandler(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, ctl.RespError(ctx, err, "UserLogin RPC 调用失败"))
 		return
 	}
+	fmt.Println("userResp", userResp)
 	token, err := utils.GenerateToken(uint(userResp.UserDetail.ID))
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, ctl.RespError(ctx, err, "GenerateToken 失败"))

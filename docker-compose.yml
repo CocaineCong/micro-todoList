@@ -11,9 +11,9 @@ services:
     restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=grpc_todolist
-      - MYSQL_USER=grpc_todolist
-      - MYSQL_PASSWORD=grpc_todolist
+      - MYSQL_DATABASE=micro_todolist
+      - MYSQL_USER=micro_todolist
+      - MYSQL_PASSWORD=micro_todolist
       - TZ=Asia/Shanghai
     volumes:
       - ./config/sql:/docker-entrypoint-initdb.d/
