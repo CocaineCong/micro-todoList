@@ -26,7 +26,7 @@ func GetUserSrv() *UserSrv {
 	return UserSrvIns
 }
 
-func (u *UserSrv) UserLogin(ctx context.Context, req *idl.UserRequest) (resp *idl.UserDetailResponse, err error) {
+func (u *UserSrv) UserLogin(ctx context.Context, req *idl.UserRequest, resp *idl.UserDetailResponse) (err error) {
 	resp = new(idl.UserDetailResponse)
 	resp.Code = e.SUCCESS
 
@@ -45,7 +45,7 @@ func (u *UserSrv) UserLogin(ctx context.Context, req *idl.UserRequest) (resp *id
 	return
 }
 
-func (u *UserSrv) UserRegister(ctx context.Context, req *idl.UserRequest) (resp *idl.UserDetailResponse, err error) {
+func (u *UserSrv) UserRegister(ctx context.Context, req *idl.UserRequest, resp *idl.UserDetailResponse) (err error) {
 	if req.Password != req.PasswordConfirm {
 		err = errors.New("两次密码输入不一致")
 		return
