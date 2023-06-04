@@ -2,7 +2,6 @@ package rpc
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/CocaineCong/micro-todoList/idl"
 )
@@ -10,8 +9,6 @@ import (
 // UserLogin 用户登陆
 func UserLogin(ctx context.Context, req *idl.UserRequest) (resp *idl.UserDetailResponse, err error) {
 	resp, err = UserService.UserLogin(ctx, req)
-	fmt.Println("resp", resp)
-	fmt.Println("err", err)
 	if err != nil {
 		return
 	}
