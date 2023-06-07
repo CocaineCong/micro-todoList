@@ -5,13 +5,13 @@ import (
 	"strconv"
 
 	"github.com/afex/hystrix-go/hystrix"
-	"github.com/micro/go-micro/v2/client"
+	"go-micro.dev/v4/client"
 
-	"github.com/CocaineCong/micro-todoList/idl"
+	"github.com/CocaineCong/micro-todoList/idl/pb"
 )
 
-func NewTask(id uint64, name string) *idl.TaskModel {
-	return &idl.TaskModel{
+func NewTask(id uint64, name string) *pb.TaskModel {
+	return &pb.TaskModel{
 		Id:         id,
 		Title:      name,
 		Content:    "响应超时",
@@ -25,12 +25,12 @@ func NewTask(id uint64, name string) *idl.TaskModel {
 
 // DefaultTasks 降级函数
 func DefaultTasks(resp interface{}) {
-	models := make([]*idl.TaskModel, 0)
+	models := make([]*pb.TaskModel, 0)
 	var i uint64
 	for i = 0; i < 10; i++ {
 		models = append(models, NewTask(i, "降级备忘录"+strconv.Itoa(20+int(i))))
 	}
-	result := resp.(*idl.TaskListResponse)
+	result := resp.(*pb.TaskListResponse)
 	result.TaskList = models
 }
 

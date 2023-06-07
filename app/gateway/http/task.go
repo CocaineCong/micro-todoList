@@ -7,12 +7,12 @@ import (
 	"github.com/spf13/cast"
 
 	"github.com/CocaineCong/micro-todoList/app/gateway/rpc"
-	"github.com/CocaineCong/micro-todoList/idl"
+	"github.com/CocaineCong/micro-todoList/idl/pb"
 	"github.com/CocaineCong/micro-todoList/pkg/ctl"
 )
 
 func ListTaskHandler(ctx *gin.Context) {
-	var taskReq idl.TaskRequest
+	var taskReq pb.TaskRequest
 	if err := ctx.Bind(&taskReq); err != nil {
 		ctx.JSON(http.StatusBadRequest, ctl.RespError(ctx, err, "绑定参数失败"))
 		return
@@ -27,7 +27,7 @@ func ListTaskHandler(ctx *gin.Context) {
 }
 
 func CreateTaskHandler(ctx *gin.Context) {
-	var req idl.TaskRequest
+	var req pb.TaskRequest
 	if err := ctx.Bind(&req); err != nil {
 		ctx.JSON(http.StatusBadRequest, ctl.RespError(ctx, err, "绑定参数失败"))
 		return
@@ -47,7 +47,7 @@ func CreateTaskHandler(ctx *gin.Context) {
 }
 
 func GetTaskHandler(ctx *gin.Context) {
-	var req idl.TaskRequest
+	var req pb.TaskRequest
 	if err := ctx.Bind(&req); err != nil {
 		ctx.JSON(http.StatusBadRequest, ctl.RespError(ctx, err, "绑定参数失败"))
 		return
@@ -68,7 +68,7 @@ func GetTaskHandler(ctx *gin.Context) {
 }
 
 func UpdateTaskHandler(ctx *gin.Context) {
-	var req idl.TaskRequest
+	var req pb.TaskRequest
 	if err := ctx.Bind(&req); err != nil {
 		ctx.JSON(http.StatusBadRequest, ctl.RespError(ctx, err, "绑定参数失败"))
 		return
@@ -89,7 +89,7 @@ func UpdateTaskHandler(ctx *gin.Context) {
 }
 
 func DeleteTaskHandler(ctx *gin.Context) {
-	var req idl.TaskRequest
+	var req pb.TaskRequest
 	if err := ctx.Bind(&req); err != nil {
 		ctx.JSON(http.StatusBadRequest, ctl.RespError(ctx, err, "绑定参数失败"))
 		return

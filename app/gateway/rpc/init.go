@@ -1,15 +1,15 @@
 package rpc
 
 import (
-	"github.com/micro/go-micro/v2"
+	"go-micro.dev/v4"
 
 	"github.com/CocaineCong/micro-todoList/app/gateway/wrappers"
-	"github.com/CocaineCong/micro-todoList/idl"
+	"github.com/CocaineCong/micro-todoList/idl/pb"
 )
 
 var (
-	UserService idl.UserService
-	TaskService idl.TaskService
+	UserService pb.UserService
+	TaskService pb.TaskService
 )
 
 func InitRPC() {
@@ -19,13 +19,13 @@ func InitRPC() {
 		micro.WrapClient(wrappers.NewUserWrapper),
 	)
 	// 用户服务调用实例
-	userService := idl.NewUserService("rpcUserService", userMicroService.Client())
+	userService := pb.NewUserService("rpcUserService", userMicroService.Client())
 	// task
 	taskMicroService := micro.NewService(
 		micro.Name("taskService.client"),
 		micro.WrapClient(wrappers.NewTaskWrapper),
 	)
-	taskService := idl.NewTaskService("rpcTaskService", taskMicroService.Client())
+	taskService := pb.NewTaskService("rpcTaskService", taskMicroService.Client())
 
 	UserService = userService
 	TaskService = taskService

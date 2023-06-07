@@ -3,9 +3,8 @@ package main
 import (
 	"time"
 
-	"github.com/micro/go-micro/v2/registry"
-	"github.com/micro/go-micro/v2/registry/etcd"
-	"github.com/micro/go-micro/v2/web"
+	"go-micro.dev/v4/registry"
+	"go-micro.dev/v4/web"
 
 	"github.com/CocaineCong/micro-todoList/app/gateway/router"
 	"github.com/CocaineCong/micro-todoList/app/gateway/rpc"
@@ -17,7 +16,7 @@ func main() {
 	config.Init()
 	rpc.InitRPC()
 	log.InitLog()
-	etcdReg := etcd.NewRegistry(
+	etcdReg := registry.NewRegistry(
 		registry.Addrs("127.0.0.1:2379"),
 	)
 
