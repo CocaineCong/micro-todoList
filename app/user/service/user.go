@@ -5,7 +5,7 @@ import (
 	"errors"
 	"sync"
 
-	"github.com/jinzhu/gorm"
+	"gorm.io/gorm"
 
 	"github.com/CocaineCong/micro-todoList/app/user/repository/db/dao"
 	"github.com/CocaineCong/micro-todoList/app/user/repository/db/model"
@@ -77,7 +77,7 @@ func (u *UserSrv) UserRegister(ctx context.Context, req *pb.UserRequest, resp *p
 
 func BuildUser(item *model.User) *pb.UserModel {
 	userModel := pb.UserModel{
-		ID:        uint32(item.ID),
+		Id:        uint32(item.ID),
 		UserName:  item.UserName,
 		CreatedAt: item.CreatedAt.Unix(),
 		UpdatedAt: item.UpdatedAt.Unix(),

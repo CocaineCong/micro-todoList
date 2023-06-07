@@ -15,6 +15,9 @@ proto:
 	@for file in $(IDL_PATH)/*.proto; do \
 		protoc -I $(IDL_PATH) $$file --micro_out=$(IDL_PATH)/pb --go_out=$(IDL_PATH)/pb; \
 	done
+
+.PHONY: proto2
+proto2:
 	@for file in $(shell find $(IDL_PATH)/pb/* -type f); do \
 		protoc-go-inject-tag -input=$$file; \
 	done

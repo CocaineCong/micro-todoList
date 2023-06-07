@@ -7,6 +7,7 @@ import (
 	"go-micro.dev/v4/registry"
 
 	"github.com/CocaineCong/micro-todoList/app/task/repository/db/dao"
+	"github.com/CocaineCong/micro-todoList/app/task/repository/mq"
 	"github.com/CocaineCong/micro-todoList/app/task/script"
 	"github.com/CocaineCong/micro-todoList/app/task/service"
 	"github.com/CocaineCong/micro-todoList/config"
@@ -16,6 +17,7 @@ import (
 func main() {
 	config.Init()
 	dao.InitDB()
+	mq.InitRabbitMQ()
 	// etcd注册件
 	etcdReg := registry.NewRegistry(
 		registry.Addrs("127.0.0.1:2379"),

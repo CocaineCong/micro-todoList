@@ -3,32 +3,32 @@ package services;
 option go_package ="./;pb";
 
 message UserModel{
-  // @inject_tag: json:"id"
-  uint32 ID=1;
-  // @inject_tag: json:"user_name"
-  string UserName=2;
+  // @inject_tag: json:"id" form:"id"
+  uint32 id=1;
+  // @inject_tag: json:"user_name" form:"user_name"
+  string user_name=2;
   // @inject_tag: json:"created_at"
-  int64 CreatedAt=3;
+  int64 created_at=3;
   // @inject_tag: json:"updated_at"
-  int64 UpdatedAt=4;
+  int64 updated_at=4;
   // @inject_tag: json:"deleted_at"
-  int64 DeletedAt=5;
+  int64 deleted_at=5;
 }
 
 message UserRequest{
-  // @inject_tag: json:"user_name" form:"user_name" uri:"user_name"
-  string UserName=1;
-  // @inject_tag: json:"password" form:"password" uri:"password"
-  string Password=2;
-  // @inject_tag: json:"password_confirm" form:"password_confirm" uri:"password_confirm"
-  string PasswordConfirm=3;
+  // @inject_tag: name:"user_name" json:"user_name" form:"user_name" uri:"user_name"
+  string user_name=1;
+  // @inject_tag: name:"password" json:"password" form:"password" uri:"password"
+  string password=2;
+  // @inject_tag: name:"password_confirm" json:"password_confirm" form:"password_confirm" uri:"password_confirm"
+  string password_confirm=3;
 }
 
 message UserDetailResponse{
   // @inject_tag: json:"user_detail" form:"user_detail"
-  UserModel UserDetail=1;
+  UserModel user_detail=1;
   // @inject_tag: json:"code" form:"code"
-  uint32 Code=2;
+  uint32 code=2;
 }
 
 

@@ -6,7 +6,7 @@ import (
 	"gorm.io/gorm"
 
 	"github.com/CocaineCong/micro-todoList/app/task/repository/db/model"
-	"github.com/CocaineCong/micro-todoList/idl"
+	"github.com/CocaineCong/micro-todoList/idl/pb"
 )
 
 type TaskDao struct {
@@ -39,7 +39,7 @@ func (dao *TaskDao) GetTaskByTaskIdAndUserId(taskId, userId uint64) (r *model.Ta
 }
 
 // UpdateTask 更新task
-func (dao *TaskDao) UpdateTask(req *idl.TaskRequest) (r *model.Task, err error) {
+func (dao *TaskDao) UpdateTask(req *pb.TaskRequest) (r *model.Task, err error) {
 	taskData := new(model.Task)
 	err = dao.Model(&model.Task{}).
 		Where("id= ? AND uid=?", req.Id, req.Uid).

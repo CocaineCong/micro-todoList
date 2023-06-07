@@ -16,7 +16,7 @@ import (
 // UserRegisterHandler 用户注册
 func UserRegisterHandler(ctx *gin.Context) {
 	var req pb.UserRequest
-	if err := ctx.Bind(&req); err != nil {
+	if err := ctx.ShouldBind(&req); err != nil {
 		ctx.JSON(http.StatusBadRequest, ctl.RespError(ctx, err, "UserRegister Bind 绑定参数失败"))
 		return
 	}
@@ -41,7 +41,7 @@ func UserLoginHandler(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, ctl.RespError(ctx, err, "UserLogin RPC 调用失败"))
 		return
 	}
-	token, err := utils.GenerateToken(uint(userResp.UserDetail.ID))
+	token, err := utils.GenerateToken(uint(userResp.UserDetail.Id))
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, ctl.RespError(ctx, err, "GenerateToken 失败"))
 		return
