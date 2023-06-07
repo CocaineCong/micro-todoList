@@ -52,7 +52,7 @@ func (t *TaskSrv) GetTasksList(ctx context.Context, req *idl.TaskRequest, resp *
 	if req.Limit == 0 {
 		req.Limit = 10
 	}
-	resp = new(idl.TaskListResponse) // TODO:加上code判断200还是500
+	// TODO:加上code判断200还是500
 	// 查找备忘录
 	r, count, err := dao.NewTaskDao(ctx).ListTaskByUserId(req.Uid, int(req.Start), int(req.Limit))
 	if err != nil {
@@ -71,7 +71,6 @@ func (t *TaskSrv) GetTasksList(ctx context.Context, req *idl.TaskRequest, resp *
 
 // GetTask 获取详细的备忘录
 func (t *TaskSrv) GetTask(ctx context.Context, req *idl.TaskRequest, resp *idl.TaskDetailResponse) (err error) {
-	resp = new(idl.TaskDetailResponse)
 	r, err := dao.NewTaskDao(ctx).GetTaskByTaskIdAndUserId(req.Id, req.Uid)
 	if err != nil {
 		log.LogrusObj.Error("GetTask err:%v", err)

@@ -27,9 +27,7 @@ func GetUserSrv() *UserSrv {
 }
 
 func (u *UserSrv) UserLogin(ctx context.Context, req *idl.UserRequest, resp *idl.UserDetailResponse) (err error) {
-	resp = new(idl.UserDetailResponse)
 	resp.Code = e.SUCCESS
-
 	user, err := dao.NewUserDao(ctx).FindUserByUserName(req.UserName)
 	if err != nil {
 		resp.Code = e.ERROR
@@ -50,7 +48,6 @@ func (u *UserSrv) UserRegister(ctx context.Context, req *idl.UserRequest, resp *
 		err = errors.New("两次密码输入不一致")
 		return
 	}
-	resp = new(idl.UserDetailResponse)
 	resp.Code = e.SUCCESS
 	_, err = dao.NewUserDao(ctx).FindUserByUserName(req.UserName)
 	if err != nil {

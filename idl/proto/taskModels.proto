@@ -3,22 +3,22 @@ package services;
 option go_package ="./;protos";
 
 message TaskModel{
-    //@inject_tag: json:"Id" form:"Id"
+    //@inject_tag: json:"id" form:"id"
     uint64 Id = 1;
-    //@inject_tag: json:"Uid" form:"Uid"
+    //@inject_tag: json:"uid" form:"uid"
     uint64 Uid = 2;
-    //@inject_tag: json:"Title" form:"Title"
+    //@inject_tag: json:"title" form:"title"
     string Title = 3;
-    //@inject_tag: json:"Content" form:"Content"
+    //@inject_tag: json:"content" form:"content"
     string Content = 4;
-    //@inject_tag: json:"StartTime" form:"StartTime"
+    //@inject_tag: json:"start_time" form:"start_time"
     int64 StartTime = 5;
-    //@inject_tag: json:"EndTime" form:"EndTime"
+    //@inject_tag: json:"end_time" form:"end_time"
     int64 EndTime = 6;
-    //@inject_tag: json:"Status" form:"Status"
+    //@inject_tag: json:"status" form:"status"
     int64 Status = 7;
-    //@inject_tag: json:"CreateTime" form:"CreateTime"
+    //@inject_tag: json:"create_time" form:"create_time"
     int64 CreateTime = 8;
-    //@inject_tag: json:"UpdateTime" form:"UpdateTime"
+    //@inject_tag: json:"update_time" form:"update_time"
     int64 UpdateTime = 9;
 }

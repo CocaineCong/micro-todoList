@@ -31,7 +31,7 @@ func main() {
 	// 结构命令行参数，初始化
 	microService.Init()
 	// 服务注册
-	_ = idl.RegisterTaskServiceHandler(microService.Server(), new(service.TaskSrv))
+	_ = idl.RegisterTaskServiceHandler(microService.Server(), service.GetTaskSrv())
 	// 启动微服务
 	_ = microService.Run()
 

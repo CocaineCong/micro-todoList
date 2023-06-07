@@ -13,7 +13,9 @@ message UserRequest{
 }
 
 message UserDetailResponse{
+  // @inject_tag: json:"user_detail" form:"user_detail"
   UserModel UserDetail=1;
+  // @inject_tag: json:"code" form:"code"
   uint32 Code=2;
 }
 
