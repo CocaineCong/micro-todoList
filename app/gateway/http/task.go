@@ -17,6 +17,12 @@ func ListTaskHandler(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, ctl.RespError(ctx, err, "绑定参数失败"))
 		return
 	}
+	user, err := ctl.GetUserInfo(ctx.Request.Context())
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, ctl.RespError(ctx, err, "获取用户信息错误"))
+		return
+	}
+	taskReq.Uid = uint64(user.Id)
 	// 调用服务端的函数
 	taskResp, err := rpc.TaskList(ctx, &taskReq)
 	if err != nil {
@@ -59,7 +65,7 @@ func GetTaskHandler(ctx *gin.Context) {
 	}
 	req.Id = cast.ToUint64(ctx.Param("id"))
 	req.Uid = uint64(user.Id)
-	taskRes, err := rpc.TaskList(ctx, &req)
+	taskRes, err := rpc.TaskGet(ctx, &req)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, ctl.RespError(ctx, err, "TaskList RPC 调度失败"))
 		return

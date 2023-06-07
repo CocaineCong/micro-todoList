@@ -52,13 +52,14 @@ func TaskMQ2MySQL(ctx context.Context, req *pb.TaskRequest) error {
 
 // GetTasksList 实现备忘录服务接口 获取备忘录列表
 func (t *TaskSrv) GetTasksList(ctx context.Context, req *pb.TaskRequest, resp *pb.TaskListResponse) (err error) {
+	resp.Code = e.SUCCESS
 	if req.Limit == 0 {
 		req.Limit = 10
 	}
-	// TODO:加上code判断200还是500
 	// 查找备忘录
 	r, count, err := dao.NewTaskDao(ctx).ListTaskByUserId(req.Uid, int(req.Start), int(req.Limit))
 	if err != nil {
+		resp.Code = e.ERROR
 		log.LogrusObj.Error("ListTaskByUserId err:%v", err)
 		return
 	}
@@ -74,8 +75,10 @@ func (t *TaskSrv) GetTasksList(ctx context.Context, req *pb.TaskRequest, resp *p
 
 // GetTask 获取详细的备忘录
 func (t *TaskSrv) GetTask(ctx context.Context, req *pb.TaskRequest, resp *pb.TaskDetailResponse) (err error) {
+	resp.Code = e.SUCCESS
 	r, err := dao.NewTaskDao(ctx).GetTaskByTaskIdAndUserId(req.Id, req.Uid)
 	if err != nil {
+		resp.Code = e.ERROR
 		log.LogrusObj.Error("GetTask err:%v", err)
 		return
 	}
@@ -87,8 +90,10 @@ func (t *TaskSrv) GetTask(ctx context.Context, req *pb.TaskRequest, resp *pb.Tas
 // UpdateTask 修改备忘录
 func (t *TaskSrv) UpdateTask(ctx context.Context, req *pb.TaskRequest, resp *pb.TaskDetailResponse) (err error) {
 	// 查找该用户的这条信息
+	resp.Code = e.SUCCESS
 	taskData, err := dao.NewTaskDao(ctx).UpdateTask(req)
 	if err != nil {
+		resp.Code = e.ERROR
 		log.LogrusObj.Error("UpdateTask err:%v", err)
 		return
 	}
@@ -98,8 +103,10 @@ func (t *TaskSrv) UpdateTask(ctx context.Context, req *pb.TaskRequest, resp *pb.
 
 // DeleteTask 删除备忘录
 func (t *TaskSrv) DeleteTask(ctx context.Context, req *pb.TaskRequest, resp *pb.TaskDetailResponse) (err error) {
+	resp.Code = e.SUCCESS
 	err = dao.NewTaskDao(ctx).DeleteTaskByIdAndUserId(req.Id, req.Uid)
 	if err != nil {
+		resp.Code = e.ERROR
 		log.LogrusObj.Error("DeleteTask err:%v", err)
 		return
 	}

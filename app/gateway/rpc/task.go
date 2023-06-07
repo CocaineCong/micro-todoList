@@ -54,3 +54,15 @@ func TaskList(ctx context.Context, req *pb.TaskRequest) (resp *pb.TaskListRespon
 
 	return r, nil
 }
+
+func TaskGet(ctx context.Context, req *pb.TaskRequest) (resp *pb.TaskDetailResponse, err error) {
+	r, err := TaskService.GetTask(ctx, req)
+	if err != nil {
+		return
+	}
+	if r.Code != e.SUCCESS {
+		return
+	}
+
+	return r, nil
+}
