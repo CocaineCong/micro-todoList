@@ -1,13 +1,7 @@
 # micro-todoList
-# Go-Micro V2 + RabbitMQ 构造简单备忘录
+# Go-Micro V4 + RabbitMQ 构造简单备忘录
 
-本项目改自于作者[Congz](https://github.com/congz666)的[后台管理系统](https://github.com/congz666/backstage-go)
-
-将原项目的micro升到v2，服务发现也换成etcd。
-
-保留原作者的熔断机制，token验证，网关和各模块之间的rpc通信等
-
-在此也非常感谢作者开源！
+将原项目的micro的v2升到v4，服务发现使用etcd，支持熔断机制，token验证，网关和各模块之间的rpc通信等
 
 # 项目的详细博客地址
 
@@ -26,7 +20,7 @@
 
 # 项目主要依赖：
 
-**Golang V1.16**
+**Golang V1.18**
 
 - Gin
 - Gorm
@@ -41,63 +35,62 @@
 - crypto
 
 # 项目结构
+## 1.grpc_todolist 项目总体
+```
+grpc-todolist/
+├── app                   // 各个微服务
+│   ├── gateway           // 网关
+│   ├── task              // 任务模块微服务
+│   └── user              // 用户模块微服务
+├── bin                   // 编译后的二进制文件模块
+├── config                // 配置文件
+├── consts                // 定义的常量
+├── doc                   // 接口文档
+├── idl                   // protoc文件
+│   └── pb                // 放置生成的pb文件
+├── logs                  // 放置打印日志模块
+├── pkg                   // 各种包
+│   ├── ctl               // 用户操作
+│   ├── e                 // 统一错误状态码
+│   ├── logger            // 日志
+│   └── util              // 各种工具、JWT等等..
+└── types                 // 定义各种结构体
+```
 
-## 1. gateway 网关部分
-
+## 2.gateway 网关部分
 ```
 gateway/
-├── pkg
-│  ├── e
-│  ├── logging
-│  └── util
-├── services
-│  └── proto
-├── weblib
-│  ├── handlers
-│  └──  middleware
-└── wrappers
-```
-- pkg/e : 封装错误码
-- pkg/logging : 日志文件
-- pkg/util : 工具函数
-- service/proto : 放置proto文件以及生成的pb文件
-- weblib/handlers : 各个服务的接口
-- weblib/middleware : http服务器的中间件
-- wrappers : 放置服务熔断的配置
-
-## 2. mq-server RabbitMQ 消息队列
-
-```
-mq-server/
-├── conf
-├── model
-└── service
+├── cmd                   // 启动入口
+├── http                  // HTTP请求头
+├── handler               // 视图层
+├── logs                  // 放置打印日志模块
+├── middleware            // 中间件
+├── router                // http 路由模块
+├── rpc                   // rpc 调用
+└── wrappers              // 熔断
 ```
 
-- conf：配置信息
-- model：数据库模型
-- service：服务
-
-## 3. task & user
-
+## 3.user && task 用户与任务模块
 ```
-task/ & user/
-├── conf
-├── core
-├── model
-└── service
+task/
+├── cmd                   // 启动入口
+├── service               // 业务服务
+├── repository            // 持久层
+│    ├── db               // 视图层
+│    │    ├── dao         // 对数据库进行操作
+│    │    └── model       // 定义数据库的模型
+│    └── mq               // 放置 mq
+├── script                // 监听 mq 的脚本
+└── service               // 服务
 ```
 
-- conf：配置信息
-- core：业务逻辑
-- model：数据库模型
-- service：proto文件以及各服务
 
+`config/config.ini`文件，直接将 `config.ini.example-->config.ini` 就可以了
 conf/config.ini 文件
 ```ini
 [service]
 AppMode = debug
-HttpPort = :3000
+HttpPort = :4000
 
 [mysql]
 Db = mysql
@@ -116,17 +109,25 @@ RabbitMQPort = 5672
 ```
 
 
-
 # 运行简要说明
+1. 启动环境
+
+```shell
+make env-up
+```
+
+2. 在app文件夹下的cmd，执行main.go函数
+
+```shell
+go run main.go
+```
+
+**注意：**
 1. 保证rabbitMQ开启状态
 2. 保证etcd开启状态
 3. 依次执行各模块下的main.go文件
-4. 执行user,task,api-gateway的时候需要后面加上这个，注册到etcd并且注册地址是这个地址。
-```go
-go run main.go --registry=etcd --registry_address=127.0.0.1:2379
-```
 
-**如果出错一定要注意打开etcd的keeper查看服务是否注册到etcd中。**
+**如果出错一定要注意打开etcd的keeper查看服务是否注册到etcd中！！**
 
 # 导入接口文档
 
@@ -142,12 +143,6 @@ go run main.go --registry=etcd --registry_address=127.0.0.1:2379
 效果
 
 ![postman](doc/4.效果.png)
-
-
-
-# 最后
-
-再次感谢原作者[Congz](https://github.com/congz666)的开源
 
 
 

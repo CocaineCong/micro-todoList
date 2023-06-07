@@ -1,0 +1,69 @@
+syntax="proto3";
+package services;
+option go_package = "./;pb";
+
+message TaskModel{
+  //@inject_tag: json:"id" form:"id"
+  uint64 id = 1;
+  //@inject_tag: json:"uid" form:"uid"
+  uint64 uid = 2;
+  //@inject_tag: json:"title" form:"title"
+  string title = 3;
+  //@inject_tag: json:"content" form:"content"
+  string content = 4;
+  //@inject_tag: json:"start_time" form:"start_time"
+  int64 start_time = 5;
+  //@inject_tag: json:"end_time" form:"end_time"
+  int64 end_time = 6;
+  //@inject_tag: json:"status" form:"status"
+  int64 status = 7;
+  //@inject_tag: json:"create_time" form:"create_time"
+  int64 create_time = 8;
+  //@inject_tag: json:"update_time" form:"update_time"
+  int64 update_time = 9;
+}
+
+message TaskRequest{
+    //@inject_tag: json:"id" form:"id"
+    uint64 id = 1;
+    //@inject_tag: json:"uid" form:"uid"
+    uint64 uid = 2;
+    //@inject_tag: json:"title" form:"title"
+    string title = 3;
+    //@inject_tag: json:"content" form:"content"
+    string content = 4;
+    //@inject_tag: json:"start_time" form:"start_time"
+    int64 start_time = 5;
+    //@inject_tag: json:"end_time" form:"end_time"
+    int64 end_time = 6;
+    //@inject_tag: json:"status" form:"status"
+    int64 status = 7;
+    // @inject_tag: json:"start" form:"start"
+    uint32 start = 8;
+    // @inject_tag: json:"limit" form:"limit"
+    uint32 limit = 9;
+}
+
+message TaskListResponse{
+  // @inject_tag: json:"task_list"
+  repeated TaskModel task_list=1;
+  // @inject_tag: json:"count"
+  uint32 count=2;
+  // @inject_tag: json:"code"
+  uint32 code=3;
+}
+
+message TaskDetailResponse{
+  // @inject_tag: json:"task_detail"
+  TaskModel task_detail=1;
+  // @inject_tag: json:"code"
+  uint32 code=2;
+}
+
+service TaskService{
+  rpc CreateTask(TaskRequest) returns(TaskDetailResponse);
+  rpc GetTasksList(TaskRequest) returns(TaskListResponse);
+  rpc GetTask(TaskRequest) returns(TaskDetailResponse);
+  rpc UpdateTask(TaskRequest) returns(TaskDetailResponse);
+  rpc DeleteTask(TaskRequest) returns(TaskDetailResponse);
+}

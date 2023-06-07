@@ -1,6 +1,6 @@
 [service]
 AppMode = debug
-HttpPort = :3000
+HttpPort = :4000
 
 [mysql]
 Db = mysql

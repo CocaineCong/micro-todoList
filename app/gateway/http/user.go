@@ -1,13 +1,12 @@
 package http
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 
 	"github.com/CocaineCong/micro-todoList/app/gateway/rpc"
-	"github.com/CocaineCong/micro-todoList/idl"
+	"github.com/CocaineCong/micro-todoList/idl/pb"
 	"github.com/CocaineCong/micro-todoList/pkg/ctl"
 	log "github.com/CocaineCong/micro-todoList/pkg/logger"
 	"github.com/CocaineCong/micro-todoList/pkg/utils"
@@ -16,8 +15,8 @@ import (
 
 // UserRegisterHandler 用户注册
 func UserRegisterHandler(ctx *gin.Context) {
-	var req idl.UserRequest
-	if err := ctx.Bind(&req); err != nil {
+	var req pb.UserRequest
+	if err := ctx.ShouldBind(&req); err != nil {
 		ctx.JSON(http.StatusBadRequest, ctl.RespError(ctx, err, "UserRegister Bind 绑定参数失败"))
 		return
 	}
@@ -32,7 +31,7 @@ func UserRegisterHandler(ctx *gin.Context) {
 
 // UserLoginHandler 用户登录
 func UserLoginHandler(ctx *gin.Context) {
-	var req idl.UserRequest
+	var req pb.UserRequest
 	if err := ctx.Bind(&req); err != nil {
 		ctx.JSON(http.StatusBadRequest, ctl.RespError(ctx, err, "UserLogin Bind 绑定参数失败"))
 		return
@@ -42,8 +41,7 @@ func UserLoginHandler(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, ctl.RespError(ctx, err, "UserLogin RPC 调用失败"))
 		return
 	}
-	fmt.Println("userResp", userResp)
-	token, err := utils.GenerateToken(uint(userResp.UserDetail.ID))
+	token, err := utils.GenerateToken(uint(userResp.UserDetail.Id))
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, ctl.RespError(ctx, err, "GenerateToken 失败"))
 		return

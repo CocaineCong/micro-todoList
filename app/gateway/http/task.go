@@ -7,16 +7,22 @@ import (
 	"github.com/spf13/cast"
 
 	"github.com/CocaineCong/micro-todoList/app/gateway/rpc"
-	"github.com/CocaineCong/micro-todoList/idl"
+	"github.com/CocaineCong/micro-todoList/idl/pb"
 	"github.com/CocaineCong/micro-todoList/pkg/ctl"
 )
 
 func ListTaskHandler(ctx *gin.Context) {
-	var taskReq idl.TaskRequest
+	var taskReq pb.TaskRequest
 	if err := ctx.Bind(&taskReq); err != nil {
 		ctx.JSON(http.StatusBadRequest, ctl.RespError(ctx, err, "绑定参数失败"))
 		return
 	}
+	user, err := ctl.GetUserInfo(ctx.Request.Context())
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, ctl.RespError(ctx, err, "获取用户信息错误"))
+		return
+	}
+	taskReq.Uid = uint64(user.Id)
 	// 调用服务端的函数
 	taskResp, err := rpc.TaskList(ctx, &taskReq)
 	if err != nil {
@@ -27,7 +33,7 @@ func ListTaskHandler(ctx *gin.Context) {
 }
 
 func CreateTaskHandler(ctx *gin.Context) {
-	var req idl.TaskRequest
+	var req pb.TaskRequest
 	if err := ctx.Bind(&req); err != nil {
 		ctx.JSON(http.StatusBadRequest, ctl.RespError(ctx, err, "绑定参数失败"))
 		return
@@ -47,7 +53,7 @@ func CreateTaskHandler(ctx *gin.Context) {
 }
 
 func GetTaskHandler(ctx *gin.Context) {
-	var req idl.TaskRequest
+	var req pb.TaskRequest
 	if err := ctx.Bind(&req); err != nil {
 		ctx.JSON(http.StatusBadRequest, ctl.RespError(ctx, err, "绑定参数失败"))
 		return
@@ -59,7 +65,7 @@ func GetTaskHandler(ctx *gin.Context) {
 	}
 	req.Id = cast.ToUint64(ctx.Param("id"))
 	req.Uid = uint64(user.Id)
-	taskRes, err := rpc.TaskList(ctx, &req)
+	taskRes, err := rpc.TaskGet(ctx, &req)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, ctl.RespError(ctx, err, "TaskList RPC 调度失败"))
 		return
@@ -68,7 +74,7 @@ func GetTaskHandler(ctx *gin.Context) {
 }
 
 func UpdateTaskHandler(ctx *gin.Context) {
-	var req idl.TaskRequest
+	var req pb.TaskRequest
 	if err := ctx.Bind(&req); err != nil {
 		ctx.JSON(http.StatusBadRequest, ctl.RespError(ctx, err, "绑定参数失败"))
 		return
@@ -89,7 +95,7 @@ func UpdateTaskHandler(ctx *gin.Context) {
 }
 
 func DeleteTaskHandler(ctx *gin.Context) {
-	var req idl.TaskRequest
+	var req pb.TaskRequest
 	if err := ctx.Bind(&req); err != nil {
 		ctx.JSON(http.StatusBadRequest, ctl.RespError(ctx, err, "绑定参数失败"))
 		return

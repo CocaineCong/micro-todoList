@@ -14,9 +14,5 @@ func ConsumeMessage(ctx context.Context, queueName string) (msgs <-chan amqp.Del
 	}
 	q, _ := ch.QueueDeclare(queueName, true, false, false, false, nil)
 	err = ch.Qos(1, 0, false)
-	msgs, err = ch.Consume(q.Name, "", false, false, false, false, nil)
-	if err != nil {
-		return
-	}
-	return
+	return ch.Consume(q.Name, "", false, false, false, false, nil)
 }

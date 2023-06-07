@@ -18,37 +18,93 @@
 							"mode": "formdata",
 							"formdata": [
 								{
-									"key": "UserName",
-									"value": "FanOne2",
+									"key": "user_name",
+									"value": "FanOne11",
 									"type": "default"
 								},
 								{
-									"key": "Password",
+									"key": "password",
 									"value": "12345678",
 									"type": "default"
 								},
 								{
-									"key": "PasswordConfirm",
+									"key": "password_confirm",
 									"value": "12345678",
 									"type": "default"
 								}
 							]
 						},
 						"url": {
-							"raw": "localhost:4000/api/v1/user/register",
+							"raw": "{{url}}api/v1/user/register",
 							"host": [
-								"localhost"
+								"{{url}}api"
 							],
-							"port": "4000",
 							"path": [
-								"api",
 								"v1",
 								"user",
 								"register"
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "用户注册",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "user_name",
+											"value": "FanOne11",
+											"type": "default"
+										},
+										{
+											"key": "password",
+											"value": "12345678",
+											"type": "default"
+										},
+										{
+											"key": "password_confirm",
+											"value": "12345678",
+											"type": "default"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url}}api/v1/user/register",
+									"host": [
+										"{{url}}api"
+									],
+									"path": [
+										"v1",
+										"user",
+										"register"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 07 Jun 2023 14:21:49 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "166"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"data\": {\n        \"user_detail\": {\n            \"id\": 13,\n            \"user_name\": \"FanOne11\",\n            \"created_at\": 1686147709,\n            \"updated_at\": 1686147709,\n            \"deleted_at\": 0\n        },\n        \"code\": 200\n    },\n    \"msg\": \"ok\",\n    \"error\": \"\"\n}"
+						}
+					]
 				},
 				{
 					"name": "用户登录",
@@ -59,12 +115,12 @@
 							"mode": "formdata",
 							"formdata": [
 								{
-									"key": "UserName",
-									"value": "FanOne2",
+									"key": "user_name",
+									"value": "FanOne11",
 									"type": "default"
 								},
 								{
-									"key": "Password",
+									"key": "password",
 									"value": "12345678",
 									"type": "default"
 								}
@@ -82,7 +138,60 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "用户登录",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "user_name",
+											"value": "FanOne11",
+											"type": "default"
+										},
+										{
+											"key": "password",
+											"value": "12345678",
+											"type": "default"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url}}api/v1/user/login",
+									"host": [
+										"{{url}}api"
+									],
+									"path": [
+										"v1",
+										"user",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 07 Jun 2023 14:24:03 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "325"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"data\": {\n        \"user\": {\n            \"user_detail\": {\n                \"id\": 13,\n                \"user_name\": \"FanOne11\",\n                \"created_at\": 1686147709,\n                \"updated_at\": 1686147709,\n                \"deleted_at\": 0\n            },\n            \"code\": 200\n        },\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsImV4cCI6MTY4NjIzNDI0MywiaXNzIjoidG9kb0xpc3QifQ.pbHk466sWsCzZtSV-f9yGuHMdXKV07WQtDv_pQSf02U\"\n    },\n    \"msg\": \"ok\",\n    \"error\": \"\"\n}"
+						}
+					]
 				}
 			]
 		},
@@ -104,17 +213,17 @@
 							"mode": "formdata",
 							"formdata": [
 								{
-									"key": "Title",
+									"key": "title",
 									"value": "FanOne",
 									"type": "default"
 								},
 								{
-									"key": "Content",
+									"key": "content",
 									"value": "点赞！",
 									"type": "default"
 								},
 								{
-									"key": "Status",
+									"key": "status",
 									"value": "0",
 									"type": "default"
 								},
@@ -137,7 +246,76 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "创建备忘录",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "default"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "title",
+											"value": "FanOne",
+											"type": "default"
+										},
+										{
+											"key": "content",
+											"value": "点赞！",
+											"type": "default"
+										},
+										{
+											"key": "status",
+											"value": "0",
+											"type": "default"
+										},
+										{
+											"key": "start",
+											"value": "",
+											"type": "default",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url}}api/v1/task",
+									"host": [
+										"{{url}}api"
+									],
+									"path": [
+										"v1",
+										"task"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 07 Jun 2023 14:37:46 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "73"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"data\": {\n        \"task_detail\": null,\n        \"code\": 0\n    },\n    \"msg\": \"ok\",\n    \"error\": \"\"\n}"
+						}
+					]
 				},
 				{
 					"name": "测试token连接",
@@ -185,7 +363,50 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "获取备忘录",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "default"
+									}
+								],
+								"url": {
+									"raw": "{{url}}api/v1/tasks",
+									"host": [
+										"{{url}}api"
+									],
+									"path": [
+										"v1",
+										"tasks"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 07 Jun 2023 14:50:57 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "664"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"data\": {\n        \"task_list\": [\n            {\n                \"id\": 1,\n                \"uid\": 13,\n                \"title\": \"FanOne\",\n                \"content\": \"点赞！\",\n                \"start_time\": 0,\n                \"end_time\": 0,\n                \"status\": 0,\n                \"create_time\": 1686148666,\n                \"update_time\": 1686148666\n            },\n            {\n                \"id\": 2,\n                \"uid\": 13,\n                \"title\": \"FanOne\",\n                \"content\": \"点赞！\",\n                \"start_time\": 0,\n                \"end_time\": 0,\n                \"status\": 0,\n                \"create_time\": 1686148777,\n                \"update_time\": 1686148777\n            },\n            {\n                \"id\": 3,\n                \"uid\": 13,\n                \"title\": \"FanOne\",\n                \"content\": \"点赞！\",\n                \"start_time\": 0,\n                \"end_time\": 0,\n                \"status\": 0,\n                \"create_time\": 1686148925,\n                \"update_time\": 1686148925\n            },\n            {\n                \"id\": 4,\n                \"uid\": 13,\n                \"title\": \"FanOne\",\n                \"content\": \"点赞！\",\n                \"start_time\": 0,\n                \"end_time\": 0,\n                \"status\": 0,\n                \"create_time\": 1686149454,\n                \"update_time\": 1686149454\n            }\n        ],\n        \"count\": 4,\n        \"code\": 200\n    },\n    \"msg\": \"ok\",\n    \"error\": \"\"\n}"
+						}
+					]
 				},
 				{
 					"name": "更新备忘录",
@@ -202,17 +423,17 @@
 							"mode": "formdata",
 							"formdata": [
 								{
-									"key": "Title",
+									"key": "title",
 									"value": "11111",
 									"type": "default"
 								},
 								{
-									"key": "Content",
+									"key": "content",
 									"value": "收藏",
 									"type": "default"
 								},
 								{
-									"key": "Status",
+									"key": "status",
 									"value": "1",
 									"type": "default"
 								}
@@ -230,7 +451,71 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "更新备忘录",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "default"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "title",
+											"value": "11111",
+											"type": "default"
+										},
+										{
+											"key": "content",
+											"value": "收藏",
+											"type": "default"
+										},
+										{
+											"key": "status",
+											"value": "1",
+											"type": "default"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url}}api/v1/task/1",
+									"host": [
+										"{{url}}api"
+									],
+									"path": [
+										"v1",
+										"task",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 07 Jun 2023 14:54:35 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "212"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"data\": {\n        \"task_detail\": {\n            \"id\": 1,\n            \"uid\": 13,\n            \"title\": \"11111\",\n            \"content\": \"收藏\",\n            \"start_time\": 0,\n            \"end_time\": 0,\n            \"status\": 1,\n            \"create_time\": 1686148666,\n            \"update_time\": 1686149675\n        },\n        \"code\": 200\n    },\n    \"msg\": \"ok\",\n    \"error\": \"\"\n}"
+						}
+					]
 				},
 				{
 					"name": "获取备忘录详情",
@@ -255,7 +540,51 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "获取备忘录详情",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "default"
+									}
+								],
+								"url": {
+									"raw": "{{url}}api/v1/task/1",
+									"host": [
+										"{{url}}api"
+									],
+									"path": [
+										"v1",
+										"task",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 07 Jun 2023 14:56:21 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "212"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"data\": {\n        \"task_detail\": {\n            \"id\": 1,\n            \"uid\": 13,\n            \"title\": \"11111\",\n            \"content\": \"收藏\",\n            \"start_time\": 0,\n            \"end_time\": 0,\n            \"status\": 1,\n            \"create_time\": 1686148666,\n            \"update_time\": 1686149675\n        },\n        \"code\": 200\n    },\n    \"msg\": \"ok\",\n    \"error\": \"\"\n}"
+						}
+					]
 				},
 				{
 					"name": "删除备忘录",
@@ -280,7 +609,51 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "删除备忘录",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "default"
+									}
+								],
+								"url": {
+									"raw": "{{url}}api/v1/task/1",
+									"host": [
+										"{{url}}api"
+									],
+									"path": [
+										"v1",
+										"task",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 07 Jun 2023 14:56:30 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "75"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"data\": {\n        \"task_detail\": null,\n        \"code\": 200\n    },\n    \"msg\": \"ok\",\n    \"error\": \"\"\n}"
+						}
+					]
 				}
 			]
 		},

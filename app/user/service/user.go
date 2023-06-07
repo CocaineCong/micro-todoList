@@ -5,11 +5,11 @@ import (
 	"errors"
 	"sync"
 
-	"github.com/jinzhu/gorm"
+	"gorm.io/gorm"
 
 	"github.com/CocaineCong/micro-todoList/app/user/repository/db/dao"
 	"github.com/CocaineCong/micro-todoList/app/user/repository/db/model"
-	"github.com/CocaineCong/micro-todoList/idl"
+	"github.com/CocaineCong/micro-todoList/idl/pb"
 	"github.com/CocaineCong/micro-todoList/pkg/e"
 )
 
@@ -26,10 +26,8 @@ func GetUserSrv() *UserSrv {
 	return UserSrvIns
 }
 
-func (u *UserSrv) UserLogin(ctx context.Context, req *idl.UserRequest, resp *idl.UserDetailResponse) (err error) {
-	resp = new(idl.UserDetailResponse)
+func (u *UserSrv) UserLogin(ctx context.Context, req *pb.UserRequest, resp *pb.UserDetailResponse) (err error) {
 	resp.Code = e.SUCCESS
-
 	user, err := dao.NewUserDao(ctx).FindUserByUserName(req.UserName)
 	if err != nil {
 		resp.Code = e.ERROR
@@ -45,12 +43,11 @@ func (u *UserSrv) UserLogin(ctx context.Context, req *idl.UserRequest, resp *idl
 	return
 }
 
-func (u *UserSrv) UserRegister(ctx context.Context, req *idl.UserRequest, resp *idl.UserDetailResponse) (err error) {
+func (u *UserSrv) UserRegister(ctx context.Context, req *pb.UserRequest, resp *pb.UserDetailResponse) (err error) {
 	if req.Password != req.PasswordConfirm {
 		err = errors.New("两次密码输入不一致")
 		return
 	}
-	resp = new(idl.UserDetailResponse)
 	resp.Code = e.SUCCESS
 	_, err = dao.NewUserDao(ctx).FindUserByUserName(req.UserName)
 	if err != nil {
@@ -78,9 +75,9 @@ func (u *UserSrv) UserRegister(ctx context.Context, req *idl.UserRequest, resp *
 	return
 }
 
-func BuildUser(item *model.User) *idl.UserModel {
-	userModel := idl.UserModel{
-		ID:        uint32(item.ID),
+func BuildUser(item *model.User) *pb.UserModel {
+	userModel := pb.UserModel{
+		Id:        uint32(item.ID),
 		UserName:  item.UserName,
 		CreatedAt: item.CreatedAt.Unix(),
 		UpdatedAt: item.UpdatedAt.Unix(),

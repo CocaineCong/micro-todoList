@@ -6,7 +6,7 @@ import (
 	"gorm.io/gorm"
 
 	"github.com/CocaineCong/micro-todoList/app/task/repository/db/model"
-	"github.com/CocaineCong/micro-todoList/idl"
+	"github.com/CocaineCong/micro-todoList/idl/pb"
 )
 
 type TaskDao struct {
@@ -39,20 +39,20 @@ func (dao *TaskDao) GetTaskByTaskIdAndUserId(taskId, userId uint64) (r *model.Ta
 }
 
 // UpdateTask 更新task
-func (dao *TaskDao) UpdateTask(req *idl.TaskRequest) (r *model.Task, err error) {
-	taskData := new(model.Task)
+func (dao *TaskDao) UpdateTask(req *pb.TaskRequest) (r *model.Task, err error) {
+	r = new(model.Task)
 	err = dao.Model(&model.Task{}).
-		Where("id= ? AND uid=?", req.Id, req.Uid).
-		First(&taskData).Error
+		Where("id = ? AND uid = ?", req.Id, req.Uid).
+		First(&r).Error
 	if err != nil {
 		return
 	}
-	taskData.Title = req.Title
-	taskData.Status = int(req.Status)
-	taskData.Content = req.Content
+	r.Title = req.Title
+	r.Status = int(req.Status)
+	r.Content = req.Content
 
-	err = dao.Model(&model.Task{}).Save(&taskData).Error
-	return taskData, err
+	err = dao.Save(&r).Error
+	return
 }
 
 func (dao *TaskDao) DeleteTaskByIdAndUserId(id, uId uint64) error {

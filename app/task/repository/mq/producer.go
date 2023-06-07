@@ -1,7 +1,11 @@
 package mq
 
 import (
+	"fmt"
+
 	"github.com/streadway/amqp"
+
+	"github.com/CocaineCong/micro-todoList/consts"
 )
 
 // SendMessage2MQ 发送消息到mq
@@ -11,7 +15,7 @@ func SendMessage2MQ(body []byte) (err error) {
 		return
 	}
 
-	q, _ := ch.QueueDeclare("task_queue", true, false, false, false, nil)
+	q, _ := ch.QueueDeclare(consts.RabbitMqTaskQueue, true, false, false, false, nil)
 	err = ch.Publish("", q.Name, false, false, amqp.Publishing{
 		DeliveryMode: amqp.Persistent,
 		ContentType:  "application/json",
@@ -21,5 +25,6 @@ func SendMessage2MQ(body []byte) (err error) {
 		return
 	}
 
+	fmt.Println("发送MQ成功...")
 	return
 }
