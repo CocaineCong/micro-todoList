@@ -12,12 +12,18 @@ import (
 	"github.com/CocaineCong/micro-todoList/app/task/service"
 	"github.com/CocaineCong/micro-todoList/config"
 	"github.com/CocaineCong/micro-todoList/idl/pb"
+	log "github.com/CocaineCong/micro-todoList/pkg/logger"
 )
 
 func main() {
 	config.Init()
 	dao.InitDB()
 	mq.InitRabbitMQ()
+	log.InitLog()
+
+	// 启动一些脚本
+	loadingScript()
+
 	// etcd注册件
 	etcdReg := registry.NewRegistry(
 		registry.Addrs("127.0.0.1:2379"),
@@ -35,6 +41,9 @@ func main() {
 	_ = pb.RegisterTaskServiceHandler(microService.Server(), service.GetTaskSrv())
 	// 启动微服务
 	_ = microService.Run()
+}
 
-	go script.TaskCreateSync(context.Background())
+func loadingScript() {
+	ctx := context.Background()
+	go script.TaskCreateSync(ctx)
 }

@@ -4,11 +4,15 @@ import (
 	"context"
 
 	"github.com/CocaineCong/micro-todoList/idl/pb"
+	"github.com/CocaineCong/micro-todoList/pkg/e"
 )
 
 func TaskCreate(ctx context.Context, req *pb.TaskRequest) (resp *pb.TaskDetailResponse, err error) {
 	r, err := TaskService.CreateTask(ctx, req)
 	if err != nil {
+		return
+	}
+	if r.Code != e.SUCCESS {
 		return
 	}
 
@@ -20,6 +24,9 @@ func TaskUpdate(ctx context.Context, req *pb.TaskRequest) (resp *pb.TaskDetailRe
 	if err != nil {
 		return
 	}
+	if r.Code != e.SUCCESS {
+		return
+	}
 
 	return r, nil
 }
@@ -29,6 +36,9 @@ func TaskDelete(ctx context.Context, req *pb.TaskRequest) (resp *pb.TaskDetailRe
 	if err != nil {
 		return
 	}
+	if r.Code != e.SUCCESS {
+		return
+	}
 
 	return r, nil
 }
@@ -36,6 +46,9 @@ func TaskDelete(ctx context.Context, req *pb.TaskRequest) (resp *pb.TaskDetailRe
 func TaskList(ctx context.Context, req *pb.TaskRequest) (resp *pb.TaskListResponse, err error) {
 	r, err := TaskService.GetTasksList(ctx, req)
 	if err != nil {
+		return
+	}
+	if r.Code != e.SUCCESS {
 		return
 	}
 
