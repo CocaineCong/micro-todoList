@@ -35,9 +35,9 @@
 - crypto
 
 # 项目结构
-## 1.grpc_todolist 项目总体
+## 1.micro_todolist 项目总体
 ```
-grpc-todolist/
+micro-todolist/
 ├── app                   // 各个微服务
 │   ├── gateway           // 网关
 │   ├── task              // 任务模块微服务
