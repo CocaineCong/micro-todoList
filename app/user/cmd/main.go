@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+
 	"go-micro.dev/v4"
 	"go-micro.dev/v4/registry"
 
@@ -15,13 +17,13 @@ func main() {
 	dao.InitDB()
 	// etcd注册件
 	etcdReg := registry.NewRegistry(
-		registry.Addrs("127.0.0.1:2379"), // TODO 放在配置文件中
+		registry.Addrs(fmt.Sprintf("%s:%s", config.EtcdHost, config.EtcdPort)),
 	)
 	// 得到一个微服务实例
 	microService := micro.NewService(
-		micro.Name("rpcUserService"),    // 微服务名字
-		micro.Address("127.0.0.1:8082"), // TODO 放在配置文件中
-		micro.Registry(etcdReg),         // etcd注册件
+		micro.Name("rpcUserService"), // 微服务名字
+		micro.Address(config.UserServiceAddress),
+		micro.Registry(etcdReg), // etcd注册件
 	)
 	// 结构命令行参数，初始化
 	microService.Init()

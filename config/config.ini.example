@@ -17,3 +17,11 @@ RabbitMQUser = guest
 RabbitMQPassWord = guest
 RabbitMQHost = localhost
 RabbitMQPort = 5672
+
+[etcd]
+EtcdHost = localhost
+EtcdPort = 2379
+
+[server]
+UserServiceAddress = 127.0.0.1:8082
+TaskServiceAddress = 127.0.0.1:8083
