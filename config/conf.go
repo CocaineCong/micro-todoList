@@ -20,6 +20,12 @@ var (
 	RabbitMQPassWord string
 	RabbitMQHost     string
 	RabbitMQPort     string
+
+	EtcdHost string
+	EtcdPort string
+
+	UserServiceAddress string
+	TaskServiceAddress string
 )
 
 func Init() {
@@ -28,7 +34,9 @@ func Init() {
 		fmt.Println("配置文件读取错误，请检查文件路径:", err)
 	}
 	LoadMysqlData(file)
+	LoadEtcd(file)
 	LoadRabbitMQ(file)
+	LoadServer(file)
 }
 
 func LoadMysqlData(file *ini.File) {
@@ -47,4 +55,14 @@ func LoadRabbitMQ(file *ini.File) {
 	RabbitMQPassWord = file.Section("rabbitmq").Key("RabbitMQPassWord").String()
 	RabbitMQHost = file.Section("rabbitmq").Key("RabbitMQHost").String()
 	RabbitMQPort = file.Section("rabbitmq").Key("RabbitMQPort").String()
+}
+
+func LoadEtcd(file *ini.File) {
+	EtcdHost = file.Section("etcd").Key("EtcdHost").String()
+	EtcdPort = file.Section("etcd").Key("EtcdPort").String()
+}
+
+func LoadServer(file *ini.File) {
+	UserServiceAddress = file.Section("server").Key("UserServiceAddress").String()
+	TaskServiceAddress = file.Section("server").Key("TaskServiceAddress").String()
 }

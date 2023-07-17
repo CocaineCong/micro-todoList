@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 
 	"go-micro.dev/v4"
 	"go-micro.dev/v4/registry"
@@ -26,12 +27,12 @@ func main() {
 
 	// etcd注册件
 	etcdReg := registry.NewRegistry(
-		registry.Addrs("127.0.0.1:2379"),
+		registry.Addrs(fmt.Sprintf("%s:%s", config.EtcdHost, config.EtcdPort)),
 	)
 	// 得到一个微服务实例
 	microService := micro.NewService(
 		micro.Name("rpcTaskService"), // 微服务名字
-		micro.Address("127.0.0.1:8083"),
+		micro.Address(config.TaskServiceAddress),
 		micro.Registry(etcdReg), // etcd注册件
 	)
 
