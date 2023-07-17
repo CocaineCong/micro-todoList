@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"time"
 
 	"go-micro.dev/v4/registry"
@@ -17,7 +18,7 @@ func main() {
 	rpc.InitRPC()
 	log.InitLog()
 	etcdReg := registry.NewRegistry(
-		registry.Addrs("127.0.0.1:2379"),
+		registry.Addrs(fmt.Sprintf("%s:%s", config.EtcdHost, config.EtcdPort)),
 	)
 
 	// 创建微服务实例，使用gin暴露http接口并注册到etcd
