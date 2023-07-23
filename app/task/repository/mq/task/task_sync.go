@@ -38,6 +38,8 @@ func (s *SyncTask) RunTaskCreate(ctx context.Context) error {
 				log.LogrusObj.Infof("Received run Task: %s", err)
 			}
 
+			d.Ack(false)
+
 		}
 	}()
 
