@@ -28,7 +28,7 @@ func GetTaskSrv() *TaskSrv {
 
 // CreateTask 创建备忘录，将备忘录信息生产，放到rabbitMQ消息队列中
 func (t *TaskSrv) CreateTask(ctx context.Context, req *pb.TaskRequest, resp *pb.TaskDetailResponse) (err error) {
-	body, _ := json.Marshal(req) // title，content
+	body, _ := json.Marshal(&req) // title，content
 	resp.Code = e.SUCCESS
 	err = mq.SendMessage2MQ(body)
 	if err != nil {

@@ -28,7 +28,7 @@ func (s *SyncTask) RunTaskCreate(ctx context.Context) error {
 
 			// 落库
 			reqRabbitMQ := new(pb.TaskRequest)
-			err = json.Unmarshal(d.Body, reqRabbitMQ)
+			err = json.Unmarshal(d.Body, &reqRabbitMQ)
 			if err != nil {
 				log.LogrusObj.Infof("Received run Task: %s", err)
 			}
