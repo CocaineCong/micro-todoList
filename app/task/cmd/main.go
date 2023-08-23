@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/go-micro/plugins/v4/registry/etcd"
 	"go-micro.dev/v4"
 	"go-micro.dev/v4/registry"
 
@@ -26,7 +27,7 @@ func main() {
 	loadingScript()
 
 	// etcd注册件
-	etcdReg := registry.NewRegistry(
+	etcdReg := etcd.NewRegistry(
 		registry.Addrs(fmt.Sprintf("%s:%s", config.EtcdHost, config.EtcdPort)),
 	)
 	// 得到一个微服务实例
