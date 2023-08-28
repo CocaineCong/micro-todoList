@@ -46,10 +46,10 @@ services:
     image: "evildecay/etcdkeeper:latest"
     container_name: etcd-keeper
     environment:
-      - ETCD_HOSTS = http://etcd:2379
-      - SW_STORAGE_ETCD_CLUSTER_NODES = etcd:2379
-      - HOST = 127.0.0.1
-      - HOSTNAME = etcd-keeper
+      - ETCD_HOSTS=http://etcd:2379
+      - SW_STORAGE_ETCD_CLUSTER_NODES=etcd:2379
+      - HOST=127.0.0.1
+      - HOSTNAME=etcd-keeper
     links:
       - etcd
     ports:
