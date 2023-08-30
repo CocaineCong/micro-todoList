@@ -35,3 +35,14 @@ env-up:
 .PHONY: env-down
 env-down:
 	docker-compose down
+
+.PHONY: run
+run: 
+	make -j3 run-all;
+
+.PHONY: run-all
+run-all: $(addprefix run-, $(SERVICES))
+
+.PHONY: run-%
+run-%:
+	go run $(DIR)/$*/cmd/main.go;
