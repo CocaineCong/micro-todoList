@@ -116,10 +116,10 @@ RabbitMQPort = 5672
 make env-up
 ```
 
-2. 在app文件夹下的cmd，执行main.go函数
+2. 运行服务
 
 ```shell
-go run main.go
+make run
 ```
 
 **注意：**
