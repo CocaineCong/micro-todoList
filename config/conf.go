@@ -26,6 +26,12 @@ var (
 
 	UserServiceAddress string
 	TaskServiceAddress string
+
+	RedisHost     string
+	RedisPort     string
+	RedisUsername string
+	RedisPassword string
+	RedisDbName   int
 )
 
 func Init() {
@@ -37,6 +43,7 @@ func Init() {
 	LoadEtcd(file)
 	LoadRabbitMQ(file)
 	LoadServer(file)
+	LoadRedisData(file)
 }
 
 func LoadMysqlData(file *ini.File) {
@@ -65,4 +72,11 @@ func LoadEtcd(file *ini.File) {
 func LoadServer(file *ini.File) {
 	UserServiceAddress = file.Section("server").Key("UserServiceAddress").String()
 	TaskServiceAddress = file.Section("server").Key("TaskServiceAddress").String()
+}
+
+func LoadRedisData(file *ini.File) {
+	RedisHost = file.Section("redis").Key("RedisHost").String()
+	RedisPort = file.Section("redis").Key("RedisPort").String()
+	RedisUsername = file.Section("redis").Key("RedisUsername").String()
+	RedisPassword = file.Section("redis").Key("RedisPassword").String()
 }

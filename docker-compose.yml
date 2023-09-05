@@ -68,3 +68,17 @@ services:
       - RABBITMQ_DEFAULT_PASS=guest  # 设置 RabbitMQ 默认密码
     networks:
       - todolist
+
+  redis:
+    container_name: redis
+    image: redis:latest
+    restart: always
+    environment:
+      - REDIS_PASSWORD=micro_todolist
+      - ALLOW_EMPTY_PASSWORD=no
+    ports:
+      - "6379:6379"
+    volumes:
+      - /usr/local/redis:/usr/local/redis
+    networks:
+      - todolist

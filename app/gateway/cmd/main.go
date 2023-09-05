@@ -10,6 +10,7 @@ import (
 
 	"github.com/CocaineCong/micro-todoList/app/gateway/router"
 	"github.com/CocaineCong/micro-todoList/app/gateway/rpc"
+	"github.com/CocaineCong/micro-todoList/app/user/repository/cache"
 	"github.com/CocaineCong/micro-todoList/config"
 	log "github.com/CocaineCong/micro-todoList/pkg/logger"
 )
@@ -17,6 +18,7 @@ import (
 func main() {
 	config.Init()
 	rpc.InitRPC()
+	cache.InitCache()
 	log.InitLog()
 	etcdReg := etcd.NewRegistry(
 		registry.Addrs(fmt.Sprintf("%s:%s", config.EtcdHost, config.EtcdPort)),
