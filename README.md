@@ -99,6 +99,7 @@ DbPort = 3306
 DbUser = root
 DbPassWord = root
 DbName = micro_todolist
+Charset = utf8mb4
 
 [rabbitmq]
 RabbitMQ = amqp
@@ -106,6 +107,20 @@ RabbitMQUser = guest
 RabbitMQPassWord = guest
 RabbitMQHost = localhost
 RabbitMQPort = 5672
+
+[etcd]
+EtcdHost = localhost
+EtcdPort = 2379
+
+[server]
+UserServiceAddress = 127.0.0.1:8082
+TaskServiceAddress = 127.0.0.1:8083
+
+[redis]
+RedisHost = localhost
+RedisPort = 2379
+RedisUsername = micro_todolist
+RedisPassword = 
 ```
 
 
