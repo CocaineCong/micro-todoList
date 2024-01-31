@@ -29,7 +29,6 @@ var (
 
 	RedisHost     string
 	RedisPort     string
-	RedisUsername string
 	RedisPassword string
 	RedisDbName   int
 )
@@ -77,6 +76,5 @@ func LoadServer(file *ini.File) {
 func LoadRedisData(file *ini.File) {
 	RedisHost = file.Section("redis").Key("RedisHost").String()
 	RedisPort = file.Section("redis").Key("RedisPort").String()
-	RedisUsername = file.Section("redis").Key("RedisUsername").String()
 	RedisPassword = file.Section("redis").Key("RedisPassword").String()
 }

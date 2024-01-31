@@ -16,12 +16,10 @@ var RedisClient *redis.Client
 func InitCache() {
 	host := config.RedisHost
 	port := config.RedisPort
-	username := config.RedisUsername
 	password := config.RedisPassword
 	database := config.RedisDbName
 	client := redis.NewClient(&redis.Options{
 		Addr:     fmt.Sprintf("%s:%s", host, port),
-		Username: username,
 		Password: password,
 		DB:       database,
 	})
