@@ -16,7 +16,10 @@ services:
       - MYSQL_PASSWORD=micro_todolist
       - TZ=Asia/Shanghai
     volumes:
-      - ./config/sql:/docker-entrypoint-initdb.d/
+      - /etc/localtime:/etc/localtime
+      - ./config/mysql:/var/lib/mysql
+      - ./logs/mysql/log:/var/log/mysql
+
     ports:
       - "3306:3306"
     networks:

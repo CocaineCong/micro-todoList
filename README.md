@@ -96,8 +96,8 @@ HttpPort = :4000
 Db = mysql
 DbHost = 127.0.0.1
 DbPort = 3306
-DbUser = root
-DbPassWord = root
+DbUser = micro_todolist
+DbPassWord = micro_todolist
 DbName = micro_todolist
 Charset = utf8mb4
 
@@ -118,9 +118,8 @@ TaskServiceAddress = 127.0.0.1:8083
 
 [redis]
 RedisHost = localhost
-RedisPort = 2379
-RedisUsername = micro_todolist
-RedisPassword = 
+RedisPort = 6379
+RedisPassword = micro_todolist
 ```
 
 
